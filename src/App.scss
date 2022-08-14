@@ -546,3 +546,44 @@ footer a:focus {
 .forgot-password:focus {
   color: rgb(12, 97, 33);
 }
+.btn-edit-skills {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-edit-skills-on {
+  background-color: whitesmoke;
+  background-repeat: no-repeat;
+  border-width: 1px;
+  border-style: solid;
+  border-color: whitesmoke;
+  margin: 5px 5px;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-edit-skills-off {
+  background-color: #696969;
+  background-repeat: no-repeat;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: whitesmoke;
+  margin: 5px 5px;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-edit-skill-on:hover,
+.btn-edit-skills-on:active,
+.btn-edit-skills-on:focus,
+.btn-edit-skill-off:hover,
+.btn-edit-skills-off:active,
+.btn-edit-skills-off:focus {
+  outline: none;
+}

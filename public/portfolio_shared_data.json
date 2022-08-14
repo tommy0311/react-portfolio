@@ -21,47 +21,47 @@
         {
           "name": "HTML 5",
           "class": "devicon-html5-plain",
-          "level": "95"
+          "select": false
         },
         {
           "name": "CSS 3",
           "class": "devicon-css3-plain",
-          "level": "95"
+          "select": false
         },
         {
           "name": "Angular",
           "class": "devicon-angularjs-plain",
-          "level": "80"
+          "select": false
         },
         {
           "name": "TypeScript",
           "class": "devicon-typescript-plain",
-          "level": "90"
+          "select": false
         },
         {
           "name": "JavaScript",
           "class": "devicon-javascript-plain",
-          "level": "70"
+          "select": false
         },
         {
           "name": "Sass",
           "class": "devicon-sass-original",
-          "level": "75"
+          "select": false
         },
         {
           "name": "Bootstrap",
           "class": "devicon-bootstrap-plain",
-          "level": "85"
+          "select": false
         },
         {
           "name": "C#",
           "class": "devicon-csharp-plain",
-          "level": "65"
+          "select": false
         },
         {
           "name": "MySql",
           "class": "devicon-mysql-plain",
-          "level": "60"
+          "select": false
         }
       ]
     }

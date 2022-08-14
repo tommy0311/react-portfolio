@@ -6,17 +6,17 @@ function Skills(props) {
 
   if (props.sharedSkills && props.resumeBasicInfo) {
     sectionName = props.resumeBasicInfo.section_name.skills;
-    skills = props.sharedSkills.icons.map(function (skills, i) {
+    skills = props.sharedSkills.icons.map(function (skill, i) {
       return (
         <li className="list-inline-item mx-3" key={i}>
           <span>
             <div className="text-center skills-tile">
-              <i className={skills.class} style={{ fontSize: "220%" }}>
+              <i className={skill.class} style={{ fontSize: "220%" }}>
                 <p
                   className="text-center"
                   style={{ fontSize: "30%", marginTop: "4px" }}
                 >
-                  {skills.name}
+                  {skill.name}
                 </p>
               </i>
             </div>
