@@ -4,8 +4,8 @@ export default function Login() {
   return (
     <div className="login-container">
       <div className="card">
-        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="avatar" />
-        <p id="profile-name" class="profile-name-card"></p>
+        <img id="profile-img" className="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="avatar" />
+        <p id="profile-name" className="profile-name-card"></p>
         <form className="form-signin">
           <span id="reauth-email" className="reauth-email"></span>
           <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus />

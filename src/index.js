@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -16,7 +17,11 @@ window.$secondaryLanguage = 'pl';
 window.$primaryLanguageIconId = 'primary-lang-icon';
 window.$secondaryLanguageIconId = 'secondary-lang-icon';
 
-ReactDOM.render((
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+
+root.render(
+
   <BrowserRouter>
     <Routes>
       <Route path="edit" element={<Edit />} />
@@ -24,6 +29,7 @@ ReactDOM.render((
       <Route path="/" element={<App />} />
     </Routes>
   </BrowserRouter>
-), document.getElementById('root'));
+
+)
 
 serviceWorker.register();

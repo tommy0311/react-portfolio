@@ -8,11 +8,11 @@ import Badge from "react-bootstrap/Badge";
 
 function Experience(props) {
   let sectionName = "";
-  let work = "";
+  let works = [];
 
   if (props.resumeExperience && props.resumeBasicInfo) {
     sectionName = props.resumeBasicInfo.section_name.experience;
-    work = props.resumeExperience.map(function (work, i) {
+    works = props.resumeExperience.map(function (work, i) {
       const technologies = work.technologies;
       const mainTechnologies = work.mainTech;
 
@@ -34,6 +34,7 @@ function Experience(props) {
         <VerticalTimelineElement
           className="vertical-timeline-element--work"
           date={work.years}
+          contentStyle={{ width: "80%" }}
           iconStyle={{
             background: "#AE944F",
             color: "#fff",
@@ -76,8 +77,8 @@ function Experience(props) {
         </div>
       </div>
       <div className="col-md-8 mx-auto">
-        <VerticalTimeline>
-          {work}
+        <VerticalTimeline layout={"1-column-left"}>
+          {works}
           <VerticalTimelineElement
             iconStyle={{
               background: "#AE944F",

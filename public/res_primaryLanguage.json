@@ -81,6 +81,7 @@
     ],
     "experience": [
       {
+        "id": "0",
         "company": "DefOpenSource",
         "title": "Front-End Developer",
         "years": "10.2019 - present",
@@ -100,6 +101,7 @@
         ]
       },
       {
+        "id": "1",
         "company": "Serros Solutions",
         "title": "Intern",
         "years": "01.2018 - 09.2019",
