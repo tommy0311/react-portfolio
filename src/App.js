@@ -76,7 +76,7 @@ function App(props) {
   return (
     <div>
       <Header sharedData={sharedData.basic_info} />
-      <div className="col-md-12 mx-auto text-center language">
+      <div className="col-md-12 mx-auto text-center language" style={{ display: "none" }}>
         <div
           onClick={() =>
             applyPickedLanguage(

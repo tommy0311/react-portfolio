@@ -53,8 +53,8 @@ const EditExperience = (props) => {
     const { active, over } = event;
     if (active.id !== over.id) {
       setExperience((experience) => {
-        const oldIndex = experience.findIndex(item => Number(item.id) === Number(active.id))
-        const newIndex = experience.findIndex(item => Number(item.id) === Number(over.id))
+        const oldIndex = experience.findIndex(item => item.id === active.id)
+        const newIndex = experience.findIndex(item => item.id === over.id)
 
         const newArray = arrayMove(experience, oldIndex, newIndex);
         return newArray

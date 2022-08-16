@@ -30,7 +30,6 @@ function SortableItem(props) {
 
   if (work) {
     const technologies = work.technologies;
-    const mainTechnologies = work.mainTech;
 
     let tech = technologies.map((technology, i) => {
       return (
