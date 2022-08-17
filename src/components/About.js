@@ -12,7 +12,7 @@ function About(props) {
 
 
   if (props.sharedBasicInfo) {
-    profilepic = "images/" + props.sharedBasicInfo.image;
+    profilepic = "/images/" + props.sharedBasicInfo.image;
   }
   if (props.resumeBasicInfo) {
     sectionName = props.resumeBasicInfo.section_name.about;

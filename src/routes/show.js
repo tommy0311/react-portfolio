@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import $ from "jquery";
-import "./App.scss";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import About from "./components/About";
-import Experience from "./components/Experience";
-import Projects from "./components/Projects";
-import Skills from "./components/Skills";
+import "../App.scss";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import About from "../components/About";
+import Experience from "../components/Experience";
+import Projects from "../components/Projects";
+import Skills from "../components/Skills";
 
-function App(props) {
+function Show(props) {
+  let { resumeId } = useParams();
+
+  const [localResumeData, setLocalResumeData] = useState({});
   const [resumeData, setResumeData] = useState({});
   const [sharedData, setSharedData] = useState({});
 
@@ -27,8 +31,8 @@ function App(props) {
     document.documentElement.lang = pickedLanguage;
     let resumePath =
       document.documentElement.lang === window.$primaryLanguage
-        ? `res_primaryLanguage.json`
-        : `res_secondaryLanguage.json`;
+        ? `/res_primaryLanguage.json`
+        : `/res_secondaryLanguage.json`;
     loadResumeFromPath(resumePath);
   }
 
@@ -51,7 +55,7 @@ function App(props) {
       dataType: "json",
       cache: false,
       success: function (data) {
-        setResumeData(data);
+        setLocalResumeData(data);
       },
       error: function (xhr, status, err) {
         alert(err);
@@ -61,7 +65,7 @@ function App(props) {
 
   let loadSharedData = () => {
     $.ajax({
-      url: `portfolio_shared_data.json`,
+      url: `/portfolio_shared_data.json`,
       dataType: "json",
       cache: false,
       success: function (data) {
@@ -76,15 +80,20 @@ function App(props) {
 
   let loadResume = () => {
     $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/62fc7045fc949a9930074b9b`,
+      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
       dataType: "json",
       cache: false,
       success: function (data) {
+        setResumeData(data)
       },
       error: function (xhr, status, err) {
         alert(err);
       },
     });
+  }
+
+  if (resumeData === {}) {
+    return (<></>)
   }
 
   return (
@@ -125,20 +134,20 @@ function App(props) {
         </div>
       </div>
       <About
-        resumeBasicInfo={resumeData.basic_info}
+        resumeBasicInfo={localResumeData.basic_info}
         sharedBasicInfo={sharedData.basic_info}
       />
       <Projects
-        resumeProjects={resumeData.projects}
-        resumeBasicInfo={resumeData.basic_info}
+        resumeProjects={localResumeData.projects}
+        resumeBasicInfo={localResumeData.basic_info}
       />
       <Skills
-        sharedSkills={sharedData.skills}
-        resumeBasicInfo={resumeData.basic_info}
+        sharedSkills={resumeData.skills}
+        resumeBasicInfo={localResumeData.basic_info}
       />
       <Experience
-        resumeExperience={resumeData.experience}
-        resumeBasicInfo={resumeData.basic_info}
+        resumeExperience={localResumeData.experience}
+        resumeBasicInfo={localResumeData.basic_info}
       />
       <Footer sharedBasicInfo={sharedData.basic_info} />
     </div>
@@ -146,4 +155,4 @@ function App(props) {
 
 }
 
-export default App;
+export default Show;

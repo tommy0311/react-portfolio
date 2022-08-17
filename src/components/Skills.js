@@ -6,7 +6,7 @@ function Skills(props) {
 
   if (props.sharedSkills && props.resumeBasicInfo) {
     sectionName = props.resumeBasicInfo.section_name.skills;
-    skills = props.sharedSkills.icons.map(function (skill, i) {
+    skills = props.sharedSkills.map(function (skill, i) {
       return (
         <li className="list-inline-item mx-3" key={i}>
           <span>

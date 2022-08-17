@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "./routes/login";
 import Edit from "./routes/edit";
+import Show from "./routes/show";
 
 /* GLOBAL VARIABLES */
 
@@ -26,6 +27,9 @@ root.render(
     <Routes>
       <Route path="edit" element={<Edit />} />
       <Route path="login" element={<Login />} />
+      <Route path="show" element={< Show />} >
+        <Route path=":resumeId" element={<Show />} />
+      </Route>
       <Route path="/" element={<App />} />
     </Routes>
   </BrowserRouter>

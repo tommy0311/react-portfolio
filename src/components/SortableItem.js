@@ -56,7 +56,7 @@ function SortableItem(props) {
               className="vertical-timeline-element-title"
               style={{ textAlign: "left", width: "80%" }}
             >
-              <input value={work.title} style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }} />
+              <input style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }} />
             </h3>
             <span style={{ flexGrow: "1" }} />
             <div {...listeners} {...attributes} className="btn btn-outline-secondary" style={{ margin: "auto 0", touchAction: "none" }}>
