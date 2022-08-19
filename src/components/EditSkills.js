@@ -8,7 +8,7 @@ function EditSkills(props) {
 
   useEffect(() => {
     if (props.sharedSkills && props.resumeBasicInfo) {
-      const newSkills = [...props.sharedSkills.icons]
+      const newSkills = [...props.sharedSkills]
       setSkills(newSkills);
     }
   }, [props])
@@ -16,7 +16,10 @@ function EditSkills(props) {
   const onClickCB = (index) => {
     setSkills(skills => {
       skills[index].select = !skills[index].select;
-      return [...skills];
+
+      const newSkills = [...skills]
+      props.skillsChangeCb(newSkills)
+      return newSkills;
     })
   }
 

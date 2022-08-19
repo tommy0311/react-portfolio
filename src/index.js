@@ -25,7 +25,9 @@ root.render(
 
   <BrowserRouter>
     <Routes>
-      <Route path="edit" element={<Edit />} />
+      <Route path="edit" element={<Edit />} >
+        <Route path=":resumeId" element={<Edit />} />
+      </Route>
       <Route path="login" element={<Login />} />
       <Route path="show" element={< Show />} >
         <Route path=":resumeId" element={<Show />} />

@@ -58,7 +58,6 @@ function Show(props) {
         setLocalResumeData(data);
       },
       error: function (xhr, status, err) {
-        alert(err);
       },
     });
   }
@@ -73,7 +72,6 @@ function Show(props) {
         document.title = `${data.basic_info.name}`;
       },
       error: function (xhr, status, err) {
-        alert(err);
       },
     });
   }
@@ -87,7 +85,6 @@ function Show(props) {
         setResumeData(data)
       },
       error: function (xhr, status, err) {
-        alert(err);
       },
     });
   }

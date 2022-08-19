@@ -7,7 +7,7 @@ function Skills(props) {
   if (props.sharedSkills && props.resumeBasicInfo) {
     sectionName = props.resumeBasicInfo.section_name.skills;
     skills = props.sharedSkills.map(function (skill, i) {
-      return (
+      return skill.select ? (
         <li className="list-inline-item mx-3" key={i}>
           <span>
             <div className="text-center skills-tile">
@@ -22,7 +22,7 @@ function Skills(props) {
             </div>
           </span>
         </li>
-      );
+      ) : null;
     });
   }
 

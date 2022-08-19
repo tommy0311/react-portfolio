@@ -218,6 +218,9 @@ header h1 {
 	align-items: center;
 }
 
+#updateResume {
+  background: #efe1bd;
+}
 #resume {
 	background: #efe1bd;
 }
@@ -470,7 +473,7 @@ footer a:focus {
   min-height: 1em;
 }
 
-.reauth-email {
+.reauth-account {
   display: block;
   color: #404040;
   line-height: 2;
@@ -534,7 +537,7 @@ footer a:focus {
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
-  background-color: rgb(12, 97, 33);
+background-color: rgb(104, 145, 162);
 }
 
 .forgot-password {
@@ -544,7 +547,7 @@ footer a:focus {
 .forgot-password:hover,
 .forgot-password:active,
 .forgot-password:focus {
-  color: rgb(12, 97, 33);
+color: rgb(104, 145, 162);
 }
 .btn-edit-skills {
   background-color: transparent;
@@ -586,4 +589,14 @@ footer a:focus {
 .btn-edit-skills-off:active,
 .btn-edit-skills-off:focus {
   outline: none;
+}
+.btn-update-resume {
+  margin: 30px auto;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #696969;
+}
+
+.btn-update-resume:active {
+  background-color: #696969;
 }

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import $ from "jquery";
 import "../App.scss";
 import Header from "../components/Header";
@@ -7,12 +8,20 @@ import About from "../components/About";
 import EditExperience from "../components/EditExperience";
 import Projects from "../components/Projects";
 import EditSkills from "../components/EditSkills";
+import DialogModal from "../components/DialogModal"
 
 function Edit(props) {
+  let { resumeId } = useParams();
+
+  const [localResumeData, setLocalResumeData] = useState({});
   const [resumeData, setResumeData] = useState({});
   const [sharedData, setSharedData] = useState({});
 
+  const resumeDataRef = useRef();
+  const dialogModalRef = useRef()
+
   useEffect(() => {
+    loadResumeData();
     loadSharedData();
     applyPickedLanguage(
       window.$primaryLanguage,
@@ -21,18 +30,18 @@ function Edit(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let applyPickedLanguage = (pickedLanguage, oppositeLangIconId) => {
+  const applyPickedLanguage = (pickedLanguage, oppositeLangIconId) => {
     swapCurrentlyActiveLanguage(oppositeLangIconId);
     document.documentElement.lang = pickedLanguage;
     let resumePath =
       document.documentElement.lang === window.$primaryLanguage
-        ? `res_primaryLanguage.json`
-        : `res_secondaryLanguage.json`;
+        ? `/res_primaryLanguage.json`
+        : `/res_secondaryLanguage.json`;
     loadResumeFromPath(resumePath);
   }
 
   let swapCurrentlyActiveLanguage = (oppositeLangIconId) => {
-    var pickedLangIconId =
+    let pickedLangIconId =
       oppositeLangIconId === window.$primaryLanguageIconId
         ? window.$secondaryLanguageIconId
         : window.$primaryLanguageIconId;
@@ -44,23 +53,22 @@ function Edit(props) {
       .setAttribute("filter", "brightness(40%)");
   }
 
-  let loadResumeFromPath = (path) => {
+  const loadResumeFromPath = (path) => {
     $.ajax({
       url: path,
       dataType: "json",
       cache: false,
       success: function (data) {
-        setResumeData(data);
+        setLocalResumeData(data);
       },
       error: function (xhr, status, err) {
-        alert(err);
       },
     });
   }
 
-  let loadSharedData = () => {
+  const loadSharedData = () => {
     $.ajax({
-      url: `portfolio_shared_data.json`,
+      url: `/portfolio_shared_data.json`,
       dataType: "json",
       cache: false,
       success: function (data) {
@@ -68,9 +76,46 @@ function Edit(props) {
         document.title = `${data.basic_info.name}`;
       },
       error: function (xhr, status, err) {
-        alert(err);
       },
     });
+  }
+
+  const loadResumeData = () => {
+    $.ajax({
+      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        resumeDataRef.current = data
+        setResumeData(data)
+      },
+      error: function (xhr, status, err) {
+      },
+    });
+  }
+
+  const putResumeData = () => {
+    $.ajax({
+      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
+      dataType: 'json',
+      type: 'put',
+      contentType: 'application/json',
+      data: JSON.stringify(resumeDataRef.current),
+      processData: false,
+      success: function (data, status, jqXHR) {
+        dialogModalRef.current.show();
+      },
+      error: function (jqXHR, status, error) {
+      }
+    });
+  }
+
+  const skillsChangeCB = (newSkills) => {
+    resumeDataRef.current.skills = newSkills
+  }
+
+  if (localResumeData === {} || resumeData === {} || sharedData === {}) {
+    return (<></>)
   }
 
   return (
@@ -111,25 +156,44 @@ function Edit(props) {
         </div>
       </div>
       <About
-        resumeBasicInfo={resumeData.basic_info}
+        resumeBasicInfo={localResumeData.basic_info}
         sharedBasicInfo={sharedData.basic_info}
       />
       <Projects
-        resumeProjects={resumeData.projects}
-        resumeBasicInfo={resumeData.basic_info}
+        resumeProjects={localResumeData.projects}
+        resumeBasicInfo={localResumeData.basic_info}
       />
       <EditSkills
-        sharedSkills={sharedData.skills}
-        resumeBasicInfo={resumeData.basic_info}
+        sharedSkills={resumeData.skills}
+        skillsChangeCb={skillsChangeCB}
+        resumeBasicInfo={localResumeData.basic_info}
       />
       <EditExperience
-        resumeExperience={resumeData.experience}
-        resumeBasicInfo={resumeData.basic_info}
+        resumeExperience={localResumeData.experience}
+        resumeBasicInfo={localResumeData.basic_info}
       />
       <Footer sharedBasicInfo={sharedData.basic_info} />
+
+      <section id="updateResume">
+        <div className="d-flex col-12" >
+          <div className="col-5 mx-auto btn-update-resume">
+            <h1 className="section-title" style={{ color: "black" }}>
+              <span className="text-black">Back</span>
+            </h1>
+          </div>
+          <div
+            className="col-5 mx-auto btn-update-resume"
+            onClick={putResumeData} data-bs-toggle="modal" >
+            <h1 className="section-title" style={{ color: "black" }}>
+              <span className="text-black">Save</span>
+            </h1>
+          </div>
+        </div>
+        <DialogModal ref={dialogModalRef} title={"Message"} message={"Successfully Saved !"} />
+      </section>
+
     </div>
   );
-
 }
 
 export default Edit;
