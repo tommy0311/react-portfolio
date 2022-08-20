@@ -191,7 +191,7 @@ function Edit(props) {
         </div>
         <DialogModal ref={dialogModalRef} title={"Message"} message={"Successfully Saved !"} />
       </section>
-
+      <button onClick={() => console.log("resumeData " + JSON.stringify(resumeData))}>print</button>
     </div>
   );
 }

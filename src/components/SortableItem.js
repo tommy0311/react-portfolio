@@ -31,10 +31,10 @@ function SortableItem(props) {
   if (work) {
     const technologies = work.technologies;
 
-    let tech = technologies.map((technology, i) => {
+    let techs = technologies.map((tech, i) => {
       return (
         <Badge pill className="experience-badge mr-2 mb-2" key={i}>
-          {technology}
+          {tech}
         </Badge>
       );
     });
@@ -70,7 +70,7 @@ function SortableItem(props) {
           >
             {work.company}
           </h4>
-          <div style={{ textAlign: "left", marginTop: "15px" }}>{tech}</div>
+          <div style={{ textAlign: "left", marginTop: "15px" }}>{techs}</div>
           <h6
             className="vertical-timeline-element-subtitle"
             style={{ textAlign: "left", marginTop: "10px" }}
