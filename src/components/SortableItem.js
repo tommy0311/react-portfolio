@@ -34,7 +34,7 @@ function SortableItem(props) {
     let techs = technologies.map((tech, i) => {
       return (
         <Badge pill className="experience-badge mr-2 mb-2" key={i}>
-          {tech}
+          {tech.name}
         </Badge>
       );
     });

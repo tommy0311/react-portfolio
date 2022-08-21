@@ -85,9 +85,9 @@ function Edit(props) {
       url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
       dataType: "json",
       cache: false,
-      success: function (data) {
-        resumeDataRef.current = data
-        setResumeData(data)
+      success: function (response) {
+        resumeDataRef.current = response.body
+        setResumeData(response.body)
       },
       error: function (xhr, status, err) {
       },
@@ -120,7 +120,7 @@ function Edit(props) {
 
   return (
     <div>
-      <Header sharedData={sharedData.basic_info} />
+      <Header sharedData={resumeData.basicInfo} />
       <div className="col-md-12 mx-auto text-center language" style={{ display: "none" }}>
         <div
           onClick={() =>
@@ -156,23 +156,23 @@ function Edit(props) {
         </div>
       </div>
       <About
-        resumeBasicInfo={localResumeData.basic_info}
-        sharedBasicInfo={sharedData.basic_info}
+        resumeBasicInfo={resumeData.basicInfo}
+        sharedBasicInfo={resumeData.basicInfo}
       />
       <Projects
-        resumeProjects={localResumeData.projects}
-        resumeBasicInfo={localResumeData.basic_info}
+        resumeProjects={resumeData.projects}
+        resumeBasicInfo={resumeData.basicInfo}
       />
       <EditSkills
         sharedSkills={resumeData.skills}
         skillsChangeCb={skillsChangeCB}
-        resumeBasicInfo={localResumeData.basic_info}
+        resumeBasicInfo={resumeData.basicInfo}
       />
       <EditExperience
-        resumeExperience={localResumeData.experience}
-        resumeBasicInfo={localResumeData.basic_info}
+        resumeExperience={resumeData.experience}
+        resumeBasicInfo={resumeData.basicInfo}
       />
-      <Footer sharedBasicInfo={sharedData.basic_info} />
+      <Footer sharedBasicInfo={resumeData.basicInfo} />
 
       <section id="updateResume">
         <div className="d-flex col-12" >
