@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateResume } from "../store/slice/resume";
 
-function EditSkills(props) {
+function EditSkills() {
   let sectionName = "";
   let icons = [];
 
-  const [skills, setSkills] = useState([]);
-
-  useEffect(() => {
-    if (props.sharedSkills && props.resumeBasicInfo) {
-      const newSkills = [...props.sharedSkills]
-      setSkills(newSkills);
-    }
-  }, [props])
+  const dispatch = useDispatch();
+  const resume = useSelector(state => {
+    return state.resume.payload
+  });
 
   const onClickCB = (index) => {
-    setSkills(skills => {
-      skills[index].select = !skills[index].select;
-
-      const newSkills = [...skills]
-      props.skillsChangeCb(newSkills)
-      return newSkills;
-    })
+    const newResume = JSON.parse(JSON.stringify(resume));
+    newResume.body.skills[index].select = !newResume.body.skills[index].select;
+    dispatch(updateResume(newResume))
   }
 
-  if (props.sharedSkills && props.resumeBasicInfo) {
-    sectionName = props.resumeBasicInfo.section_name.skills;
-    icons = skills.map((skill, index) => {
+  if (resume) {
+    sectionName = resume.body.basicInfo.sectionName.skills;
+    icons = resume.body.skills.map((skill, index) => {
       return (
         <button key={`btn-${index}`} className={skill.select === true ? "btn-edit-skills-on" : "btn-edit-skills-off"}
           onClick={() => onClickCB(index)}>

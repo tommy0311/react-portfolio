@@ -11,7 +11,7 @@ function Experience(props) {
   let works = [];
 
   if (props.resumeExperience && props.resumeBasicInfo) {
-    sectionName = props.resumeBasicInfo.section_name.experience;
+    sectionName = props.resumeBasicInfo.sectionName.experience;
     works = props.resumeExperience.map(function (work, i) {
       const technologies = work.technologies;
       const mainTechnologies = work.mainTech;

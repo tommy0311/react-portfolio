@@ -5,7 +5,7 @@ function Skills(props) {
   let skills = [];
 
   if (props.sharedSkills && props.resumeBasicInfo) {
-    sectionName = props.resumeBasicInfo.section_name.skills;
+    sectionName = props.resumeBasicInfo.sectionName.skills;
     skills = props.sharedSkills.map(function (skill, i) {
       return skill.select ? (
         <li className="list-inline-item mx-3" key={i}>

@@ -10,6 +10,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./routes/login";
 import Edit from "./routes/edit";
 import Show from "./routes/show";
+import { Provider } from "react-redux";
+import store from "./store";
 
 /* GLOBAL VARIABLES */
 
@@ -25,8 +27,8 @@ root.render(
 
   <BrowserRouter>
     <Routes>
-      <Route path="edit" element={<Edit />} >
-        <Route path=":resumeId" element={<Edit />} />
+      <Route path="edit" element={<Provider store={store}><Edit /></Provider>} >
+        <Route path=":resumeId" element={<Provider store={store}><Edit /></Provider>} />
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="show" element={< Show />} >

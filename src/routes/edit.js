@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import $ from "jquery";
+
 import "../App.scss";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -9,6 +11,7 @@ import EditExperience from "../components/EditExperience";
 import Projects from "../components/Projects";
 import EditSkills from "../components/EditSkills";
 import DialogModal from "../components/DialogModal"
+import { fetchResumeById } from "../store/slice/resume";
 
 function Edit(props) {
   let { resumeId } = useParams();
@@ -20,7 +23,14 @@ function Edit(props) {
   const resumeDataRef = useRef();
   const dialogModalRef = useRef()
 
+  const resume = useSelector(state => {
+    return state.resume.payload
+  });
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch(fetchResumeById(resumeId))
     loadResumeData();
     loadSharedData();
     applyPickedLanguage(
@@ -94,13 +104,14 @@ function Edit(props) {
     });
   }
 
-  const putResumeData = () => {
+  const putResumeBody = () => {
     $.ajax({
       url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
       dataType: 'json',
       type: 'put',
       contentType: 'application/json',
-      data: JSON.stringify(resumeDataRef.current),
+      //data: JSON.stringify(resumeDataRef.current),
+      data: JSON.stringify(resume.body),
       processData: false,
       success: function (data, status, jqXHR) {
         dialogModalRef.current.show();
@@ -108,10 +119,6 @@ function Edit(props) {
       error: function (jqXHR, status, error) {
       }
     });
-  }
-
-  const skillsChangeCB = (newSkills) => {
-    resumeDataRef.current.skills = newSkills
   }
 
   if (localResumeData === {} || resumeData === {} || sharedData === {}) {
@@ -163,15 +170,8 @@ function Edit(props) {
         resumeProjects={resumeData.projects}
         resumeBasicInfo={resumeData.basicInfo}
       />
-      <EditSkills
-        sharedSkills={resumeData.skills}
-        skillsChangeCb={skillsChangeCB}
-        resumeBasicInfo={resumeData.basicInfo}
-      />
-      <EditExperience
-        resumeExperience={resumeData.experience}
-        resumeBasicInfo={resumeData.basicInfo}
-      />
+      <EditSkills />
+      <EditExperience />
       <Footer sharedBasicInfo={resumeData.basicInfo} />
 
       <section id="updateResume">
@@ -183,7 +183,7 @@ function Edit(props) {
           </div>
           <div
             className="col-5 mx-auto btn-update-resume"
-            onClick={putResumeData} data-bs-toggle="modal" >
+            onClick={putResumeBody} data-bs-toggle="modal" >
             <h1 className="section-title" style={{ color: "black" }}>
               <span className="text-black">Save</span>
             </h1>

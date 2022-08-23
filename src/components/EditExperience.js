@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -22,20 +23,19 @@ import {
 } from "@dnd-kit/sortable";
 
 import SortableItem from "./SortableItem";
+import { updateResume } from "../store/slice/resume";
 
 const EditExperience = (props) => {
   let sectionName = "";
   let works = [];
 
   const [, setActiveId] = useState(null);
-  const [experience, setExperience] = useState([]);
+  const dispatch = useDispatch();
+  const resume = useSelector(state => {
+    return state.resume.payload
+  });
 
-  useEffect(() => {
-    if (props.resumeExperience && props.resumeBasicInfo) {
-      const newExperience = [...props.resumeExperience]
-      setExperience(newExperience);
-    }
-  }, [props])
+  const experience = resume ? resume.body.experience : []
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -52,21 +52,28 @@ const EditExperience = (props) => {
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over.id) {
-      setExperience((experience) => {
-        const oldIndex = experience.findIndex(item => item.id === active.id)
-        const newIndex = experience.findIndex(item => item.id === over.id)
+      const oldIndex = experience.findIndex(item => item.id === active.id)
+      const newIndex = experience.findIndex(item => item.id === over.id)
+      const newArray = arrayMove(experience, oldIndex, newIndex);
 
-        const newArray = arrayMove(experience, oldIndex, newIndex);
-        return newArray
-      });
+      const newResume = JSON.parse(JSON.stringify(resume));
+      newResume.body.experience = newArray;
+      dispatch(updateResume(newResume))
     }
     setActiveId(null);
   };
 
-  if (experience.length > 0 && props.resumeBasicInfo) {
-    sectionName = props.resumeBasicInfo.section_name.experience;
+  if (resume) {
+    sectionName = resume.body.basicInfo.sectionName.experience;
     works = experience.map((work, index) => {
-      return (<SortableItem work={work} key={work.id} id={work.id} index={index} handle={true} />);
+      return (
+        <SortableItem
+          work={work}
+          key={work.id}
+          id={work.id}
+          index={index}
+          handle={true}
+        />);
     });
   }
 

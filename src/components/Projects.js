@@ -15,7 +15,7 @@ function Projects(props) {
   }
 
   if (props.resumeProjects && props.resumeBasicInfo) {
-    var sectionName = props.resumeBasicInfo.section_name.projects;
+    var sectionName = props.resumeBasicInfo.sectionName.projects;
     var projects = props.resumeProjects.map(function (projects) {
       return (
         <div
