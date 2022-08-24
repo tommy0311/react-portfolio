@@ -52,14 +52,32 @@ function SortableItem(props) {
     ))
   }
 
+  const handleInputChange = (index, keyName, event) => {
+    const newResume = JSON.parse(JSON.stringify(resume));
+    newResume.body.experience[index][keyName] = event.target.value;
+    dispatch(updateResume(newResume))
+  }
+
+  const handleTechOnClick = (techIndex) => {
+    const newResume = JSON.parse(JSON.stringify(resume));
+    const technologies = newResume.body.experience[props.index].technologies
+    technologies[techIndex].select = !technologies[techIndex].select
+    dispatch(updateResume(newResume))
+  }
+
+
   if (resume) {
     const experience = resume.body.experience[props.index]
     const technologies = resume.body.experience[props.index].technologies;
 
-    let techs = technologies.map((tech, i) => {
+    let techs = technologies.map((tech, techIndex) => {
+      const badgeClassName = tech.select ? "experience-badge-on mr-2 mb-2" : "experience-badge-off mr-2 mb-2"
+
       return (
-        <Badge pill className="experience-badge mr-2 mb-2" key={i}>
-          {tech.name}
+        <Badge pill className={badgeClassName} key={techIndex}>
+          <button key={`btn-${techIndex}`} className="btn-edit-techs" onClick={() => handleTechOnClick(techIndex)}>
+            {tech.name}
+          </button>
         </Badge>
       );
     });
@@ -84,11 +102,7 @@ function SortableItem(props) {
               <input
                 style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
                 defaultValue={experience.company}
-                onChange={event => {
-                  const newResume = JSON.parse(JSON.stringify(resume));
-                  newResume.body.experience.company = event.target.value;
-                  dispatch(updateResume(newResume))
-                }}
+                onChange={event => handleInputChange(props.index, "company", event)}
               />
             </h3>
             <span style={{ flexGrow: "1" }} />
@@ -96,13 +110,36 @@ function SortableItem(props) {
               <i className="fa fa-arrows-v" style={{ fontSize: "20px" }}></i>
             </div>
           </div>
+          <h3
+            className="vertical-timeline-element-title"
+            style={{ textAlign: "left", marginTop: "10px" }}
+          >
+            <input
+              style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
+              defaultValue={experience.title}
+              onChange={event => handleInputChange(props.index, "title", event)}
+            />
+          </h3>
+          <div className="form-outline">
+            <textarea
+              className="form-control{border-width: 2px; border-color: grey;} mt-4 col-12"
+              id="textArea1"
+              rows="8"
+              defaultValue={experience.description}
+              onChange={event => handleInputChange(props.index, "description", event)}
+            />
+          </div>
           <div style={{ textAlign: "left", marginTop: "15px" }}>{techs}</div>
-          <h6
+          <h3
             className="vertical-timeline-element-subtitle"
             style={{ textAlign: "left", marginTop: "10px" }}
           >
-            {experience.years}
-          </h6>
+            <input
+              style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
+              defaultValue={experience.years}
+              onChange={event => handleInputChange(props.index, "years", event)}
+            />
+          </h3>
           <button
             className="btn btn-outline-secondary"
             style={{ fontSize: "14px", marginTop: "10px" }}

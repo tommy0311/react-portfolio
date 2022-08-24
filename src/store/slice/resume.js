@@ -18,9 +18,26 @@ export const fetchResumeById = createAsyncThunk(
   }
 )
 
+export const fetchTechnologies = createAsyncThunk(
+  'resume/fetchTechnologies',
+  async () => {
+    return await $.ajax({
+      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/technologies`,
+      dataType: "json",
+      cache: false,
+      success: function (response) {
+        return response
+      },
+      error: function (xhr, status, err) {
+        throw err
+      },
+    });
+  }
+)
+
 export const resumeSlice = createSlice({
   name: "resume",
-  initialState: { payload: null },
+  initialState: { payload: null, technologies: [] },
   reducers: {
     updateResume: (state, action) => {
       state.payload = action.payload;
@@ -29,6 +46,10 @@ export const resumeSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchResumeById.fulfilled, (state, action) => {
       state.payload = action.payload
+    })
+    builder.addCase(fetchTechnologies.fulfilled, (state, action) => {
+
+      state.technologies = action.payload
     })
   },
 });

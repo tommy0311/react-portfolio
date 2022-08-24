@@ -33,10 +33,13 @@ const EditExperience = (props) => {
   const [, setActiveId] = useState(null);
   const dispatch = useDispatch();
   const resume = useSelector(state => {
-    return state.resume.payload
+    return state.resume
   });
 
-  const experience = resume ? resume.body.experience : []
+  const resumePayload = resume.payload
+  const resumeBody = resume.payload?.body
+
+  const experience = resumeBody ? resumeBody.experience : []
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -57,28 +60,32 @@ const EditExperience = (props) => {
       const newIndex = experience.findIndex(item => item.id === over.id)
       const newArray = arrayMove(experience, oldIndex, newIndex);
 
-      const newResume = JSON.parse(JSON.stringify(resume));
-      newResume.body.experience = newArray;
-      dispatch(updateResume(newResume))
+      const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+      newResumePayload.body.experience = newArray;
+      dispatch(updateResume(newResumePayload))
     }
     setActiveId(null);
   };
 
   const createNewWork = () => {
-    const newResume = JSON.parse(JSON.stringify(resume));
-    newResume.body.experience.unshift({
+    const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+    const techs = JSON.parse(JSON.stringify(resume.technologies))
+    techs.forEach(tech => tech.select = false);
+
+    newResumePayload.body.experience.unshift({
       id: (Date.now() + Math.random()).toString(36),
-      company: 'My Company1',
-      title: 'My Title',
-      years: '2020 - Present',
+      company: "company",
+      title: "title",
+      description: "",
+      years: "2020 - Present",
       createdAt: Date.now(),
-      technologies: []
+      technologies: techs
     });
-    dispatch(updateResume(newResume))
+    dispatch(updateResume(newResumePayload))
   }
 
-  if (resume) {
-    sectionName = resume.body.basicInfo.sectionName.experience;
+  if (resumePayload) {
+    sectionName = resumeBody.basicInfo.sectionName.experience;
     works = experience.map((work, index) => {
       return (
         <SortableItem

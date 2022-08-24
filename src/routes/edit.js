@@ -11,7 +11,7 @@ import EditExperience from "../components/EditExperience";
 import Projects from "../components/Projects";
 import EditSkills from "../components/EditSkills";
 import DialogModal from "../components/DialogModal"
-import { fetchResumeById } from "../store/slice/resume";
+import { fetchResumeById, fetchTechnologies } from "../store/slice/resume";
 import { showModal } from "../store/slice/modal";
 
 function Edit(props) {
@@ -21,13 +21,16 @@ function Edit(props) {
   const [resumeData, setResumeData] = useState({});
 
   const resume = useSelector(state => {
-    return state.resume.payload
+    return state.resume
   });
+
+  const resumeBody = resume.payload?.body
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchResumeById(resumeId))
+    dispatch(fetchTechnologies())
     loadResumeData();
     //loadSharedData();
     applyPickedLanguage(
@@ -92,7 +95,7 @@ function Edit(props) {
       dataType: 'json',
       type: 'put',
       contentType: 'application/json',
-      data: JSON.stringify(resume.body),
+      data: JSON.stringify(resumeBody),
       processData: false,
       success: function (data, status, jqXHR) {
         dispatch(showModal(
@@ -179,7 +182,7 @@ function Edit(props) {
         </div>
         <DialogModal />
       </section>
-      <button onClick={() => console.log("resumeData " + JSON.stringify(resumeData))}>print</button>
+      <button onClick={() => console.log("resumeData " + JSON.stringify(resume))}>print</button>
     </div>
   );
 }

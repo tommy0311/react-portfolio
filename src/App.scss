@@ -243,14 +243,39 @@ header h1 {
 }
 
 .experience-badge {
-	font-size: 11px !important;
-	text-align: left !important;
-	padding: 5px 8px 5px 8px !important;
-	vertical-align: baseline;
-	background-color: #f9f5e9 !important;
-	color: black;
-	font-weight: lighter !important;
-	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 11px !important;
+  text-align: left !important;
+  padding: 5px 8px 5px 8px !important;
+  vertical-align: baseline;
+  background-color: #f9f5e9 !important;
+  color: black;
+  font-weight: lighter !important;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  border-style: solid;
+}
+.experience-badge-off {
+  font-size: 11px !important;
+  text-align: left !important;
+  padding: 5px 8px 5px 8px !important;
+  vertical-align: baseline;
+  background-color: white !important;
+  color: black;
+  font-weight: lighter !important;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  border-style: dotted;
+  border-width: 2px;
+}
+
+.experience-badge-on {
+  font-size: 11px !important;
+  text-align: left !important;
+  padding: 5px 8px 5px 8px !important;
+  vertical-align: baseline;
+  background-color: #f9f5e9 !important;
+  color: black;
+  font-weight: lighter !important;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      border-style: solid;
 }
 
 .vertical-timeline-element-date {
@@ -617,5 +642,22 @@ color: rgb(104, 145, 162);
 }
 
 .btn-new-experience:active {
+  background-color: #696969;
+}
+.btn-edit-techs {
+  font-size: 20px;
+  color: black;
+  outline: none;
+  border: none;
+  background-color: transparent
+}
+
+.btn-edit-techs:hover,
+.btn-edit-techs:focus {
+  outline: none;
+  border: none;
+}
+
+.btn-edit-techs:active {
   background-color: #696969;
 }
