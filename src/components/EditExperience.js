@@ -5,6 +5,7 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
+import Badge from "react-bootstrap/Badge";
 
 import {
   closestCenter,
@@ -63,6 +64,19 @@ const EditExperience = (props) => {
     setActiveId(null);
   };
 
+  const createNewWork = () => {
+    const newResume = JSON.parse(JSON.stringify(resume));
+    newResume.body.experience.unshift({
+      id: (Date.now() + Math.random()).toString(36),
+      company: 'My Company1',
+      title: 'My Title',
+      years: '2020 - Present',
+      createdAt: Date.now(),
+      technologies: []
+    });
+    dispatch(updateResume(newResume))
+  }
+
   if (resume) {
     sectionName = resume.body.basicInfo.sectionName.experience;
     works = experience.map((work, index) => {
@@ -95,17 +109,34 @@ const EditExperience = (props) => {
         onDragStart={handleDragStart}
       >
         <div className="col-md-8 mx-auto">
+
+          <Badge pill className="experience-badge" >
+            <button
+              className="btn-new-experience"
+              onClick={createNewWork}>
+              NEW
+            </button>
+          </Badge>
+
           <VerticalTimeline layout={"1-column-left"}>
             <SortableContext items={experience} strategy={verticalListSortingStrategy}>
               {works}
               <VerticalTimelineElement
+                className="vertical-timeline-element--work"
                 iconStyle={{
                   background: "#AE944F",
                   color: "#fff",
                   textAlign: "center",
+                  fontSize: "20px"
                 }}
                 icon={
-                  <i className="fas fa-hourglass-start mx-auto experience-icon"></i>
+                  <i className="fa fa-hourglass-start"
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)"
+                    }}></i>
                 }
               />
             </SortableContext>

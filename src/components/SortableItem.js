@@ -6,6 +6,7 @@ import Badge from "react-bootstrap/Badge";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
+import { showModal } from "../store/slice/modal";
 import { updateResume } from "../store/slice/resume";
 
 const ForwardItem = forwardRef(({ id, ...props }, ref) => {
@@ -13,8 +14,6 @@ const ForwardItem = forwardRef(({ id, ...props }, ref) => {
 });
 
 function SortableItem(props) {
-  let index = props.index
-
   const {
     attributes,
     listeners,
@@ -37,9 +36,25 @@ function SortableItem(props) {
     marginTop: props.index === 0 ? "5px" : "40px",
   };
 
+  const showDeleteModal = (index) => {
+    const newResume = JSON.parse(JSON.stringify(resume));
+    newResume.body.experience.splice(index, 1);
+
+    dispatch(showModal(
+      {
+        name: "deleteWorkModal",
+        title: "Message",
+        message: "Do you want to delete this item?",
+        btn2Label: "Yes",
+        btn1Label: "No",
+        newResume: newResume
+      }
+    ))
+  }
+
   if (resume) {
-    const experience = resume.body.experience
-    const technologies = resume.body.experience[index].technologies;
+    const experience = resume.body.experience[props.index]
+    const technologies = resume.body.experience[props.index].technologies;
 
     let techs = technologies.map((tech, i) => {
       return (
@@ -51,27 +66,27 @@ function SortableItem(props) {
     return (
       <ForwardItem ref={setNodeRef} style={style} >
         <VerticalTimelineElement
-          className="vertical-timeline-element-work"
+          className="vertical-timeline-element--work"
           contentStyle={{ width: "80%" }}
           iconStyle={{
             background: "#AE944F",
             color: "#fff",
             textAlign: "center",
           }}
-          icon={<i className="fab fa-angular experience-icon"></i>}
+          icon={<i className="fab experience-icon"></i>}
           key={props.id}
         >
           <div style={{ display: "flex" }}>
             <h3
               className="vertical-timeline-element-title"
-              style={{ textAlign: "left", width: "80%" }}
+              style={{ textAlign: "left", width: "70%" }}
             >
               <input
                 style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
-                defaultValue={experience[index].company}
+                defaultValue={experience.company}
                 onChange={event => {
                   const newResume = JSON.parse(JSON.stringify(resume));
-                  newResume.body.experience[index].company = event.target.value;
+                  newResume.body.experience.company = event.target.value;
                   dispatch(updateResume(newResume))
                 }}
               />
@@ -86,9 +101,12 @@ function SortableItem(props) {
             className="vertical-timeline-element-subtitle"
             style={{ textAlign: "left", marginTop: "10px" }}
           >
-            {experience[index].years}
+            {experience.years}
           </h6>
-          <button className="btn btn-outline-secondary" style={{ fontSize: "14px", marginTop: "10px" }}>
+          <button
+            className="btn btn-outline-secondary"
+            style={{ fontSize: "14px", marginTop: "10px" }}
+            onClick={() => showDeleteModal(props.index)}>
             delete
           </button>
         </VerticalTimelineElement >
@@ -97,7 +115,7 @@ function SortableItem(props) {
   }
 
   return (
-    <h2>404 Not Found</h2>
+    <></>
   );
 }
 

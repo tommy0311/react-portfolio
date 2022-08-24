@@ -590,6 +590,7 @@ color: rgb(104, 145, 162);
 .btn-edit-skills-off:focus {
   outline: none;
 }
+
 .btn-update-resume {
   margin: 30px auto;
   border-style: solid;
@@ -598,5 +599,23 @@ color: rgb(104, 145, 162);
 }
 
 .btn-update-resume:active {
+  background-color: #696969;
+}
+.btn-new-experience {
+  font-size: 20px;
+  color: black;
+  outline: none;
+  border: none;
+  background-color: transparent
+}
+
+
+.btn-new-experience:hover,
+.btn-new-experience:focus {
+  outline: none;
+  border: none;
+}
+
+.btn-new-experience:active {
   background-color: #696969;
 }

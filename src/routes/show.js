@@ -90,7 +90,7 @@ function Show(props) {
   }
 
   if (resumeData === {}) {
-    return (<></>)
+    return
   }
 
   return (

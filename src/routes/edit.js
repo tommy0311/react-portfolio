@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import $ from "jquery";
@@ -12,16 +12,13 @@ import Projects from "../components/Projects";
 import EditSkills from "../components/EditSkills";
 import DialogModal from "../components/DialogModal"
 import { fetchResumeById } from "../store/slice/resume";
+import { showModal } from "../store/slice/modal";
 
 function Edit(props) {
   let { resumeId } = useParams();
 
   const [localResumeData, setLocalResumeData] = useState({});
   const [resumeData, setResumeData] = useState({});
-  const [sharedData, setSharedData] = useState({});
-
-  const resumeDataRef = useRef();
-  const dialogModalRef = useRef()
 
   const resume = useSelector(state => {
     return state.resume.payload
@@ -32,7 +29,7 @@ function Edit(props) {
   useEffect(() => {
     dispatch(fetchResumeById(resumeId))
     loadResumeData();
-    loadSharedData();
+    //loadSharedData();
     applyPickedLanguage(
       window.$primaryLanguage,
       window.$secondaryLanguageIconId
@@ -76,27 +73,12 @@ function Edit(props) {
     });
   }
 
-  const loadSharedData = () => {
-    $.ajax({
-      url: `/portfolio_shared_data.json`,
-      dataType: "json",
-      cache: false,
-      success: function (data) {
-        setSharedData(data);
-        document.title = `${data.basic_info.name}`;
-      },
-      error: function (xhr, status, err) {
-      },
-    });
-  }
-
   const loadResumeData = () => {
     $.ajax({
       url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
       dataType: "json",
       cache: false,
       success: function (response) {
-        resumeDataRef.current = response.body
         setResumeData(response.body)
       },
       error: function (xhr, status, err) {
@@ -110,19 +92,25 @@ function Edit(props) {
       dataType: 'json',
       type: 'put',
       contentType: 'application/json',
-      //data: JSON.stringify(resumeDataRef.current),
       data: JSON.stringify(resume.body),
       processData: false,
       success: function (data, status, jqXHR) {
-        dialogModalRef.current.show();
+        dispatch(showModal(
+          {
+            name: "updateReumseOkModal",
+            title: "Message",
+            message: "Successfully Saved !",
+            btn1Label: "Ok",
+          }
+        ))
       },
       error: function (jqXHR, status, error) {
       }
     });
   }
 
-  if (localResumeData === {} || resumeData === {} || sharedData === {}) {
-    return (<></>)
+  if (localResumeData === {} || resumeData === {}) {
+    return 
   }
 
   return (
@@ -189,7 +177,7 @@ function Edit(props) {
             </h1>
           </div>
         </div>
-        <DialogModal ref={dialogModalRef} title={"Message"} message={"Successfully Saved !"} />
+        <DialogModal />
       </section>
       <button onClick={() => console.log("resumeData " + JSON.stringify(resumeData))}>print</button>
     </div>

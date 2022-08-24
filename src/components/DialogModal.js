@@ -1,39 +1,53 @@
-import React, { forwardRef, useState, useImperativeHandle } from "react";
+import React, { forwardRef } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import { useSelector, useDispatch } from "react-redux";
+import { hideModal } from "../store/slice/modal";
+
+import { updateResume } from "../store/slice/resume";
 
 const DialogModal = forwardRef((props, ref) => {
-  const [show, setShow] = useState(false);
 
-  useImperativeHandle(ref, () => ({
-    show() {
-      setShow(true)
-    },
-    hide() {
-      setShow(false)
+  const dispatch = useDispatch();
+  const modal = useSelector(state => {
+    return state.modal
+  });
+
+  const handleClose = () => dispatch(hideModal());
+
+  const handleClickBtn2 = () => {
+    if (modal.payload && modal.payload.name === 'deleteWorkModal') {
+      dispatch(updateResume(modal.payload.newResume))
     }
-  }));
+    dispatch(hideModal())
+  };
 
-  const handleClose = () => setShow(false);
+  if (!modal.payload) {
+    return
+  }
 
   return (
     <Modal
-      show={show}
+      show={modal.show}
       onHide={handleClose}
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>{props.title}</Modal.Title>
+        <Modal.Title>{modal.payload.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <h2 className="my-3">
-          {props.message}
+          {modal.payload.message}
         </h2>
       </Modal.Body>
       <Modal.Footer>
+        {modal.payload.btn2Label ?
+          <Button variant="secondary" size="lg" className="mx-3" onClick={handleClickBtn2}>
+            {modal.payload.btn2Label}
+          </Button> : null}
         <Button variant="secondary" size="lg" onClick={handleClose}>
-          OK
+          {modal.payload.btn1Label}
         </Button>
       </Modal.Footer>
     </Modal>
