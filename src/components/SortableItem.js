@@ -25,8 +25,9 @@ function SortableItem(props) {
 
   const dispatch = useDispatch();
   const resume = useSelector(state => {
-    return state.resume.payload
+    return state.resume
   });
+  const resumePayload = resume.payload
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -37,8 +38,8 @@ function SortableItem(props) {
   };
 
   const showDeleteModal = (index) => {
-    const newResume = JSON.parse(JSON.stringify(resume));
-    newResume.body.experience.splice(index, 1);
+    const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+    newResumePayload.body.experience.splice(index, 1);
 
     dispatch(showModal(
       {
@@ -47,35 +48,35 @@ function SortableItem(props) {
         message: "Do you want to delete this item?",
         btn2Label: "Yes",
         btn1Label: "No",
-        newResume: newResume
+        newResume: resumePayload
       }
     ))
   }
 
   const handleInputChange = (index, keyName, event) => {
-    const newResume = JSON.parse(JSON.stringify(resume));
-    newResume.body.experience[index][keyName] = event.target.value;
-    dispatch(updateResume(newResume))
+    const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+    newResumePayload.body.experience[index][keyName] = event.target.value;
+    dispatch(updateResume(newResumePayload))
   }
 
   const handleTechOnClick = (techIndex) => {
-    const newResume = JSON.parse(JSON.stringify(resume));
-    const technologies = newResume.body.experience[props.index].technologies
+    const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+    const technologies = newResumePayload.body.experience[props.index].technologies
     technologies[techIndex].select = !technologies[techIndex].select
-    dispatch(updateResume(newResume))
+    dispatch(updateResume(newResumePayload))
   }
 
 
-  if (resume) {
-    const experience = resume.body.experience[props.index]
-    const technologies = resume.body.experience[props.index].technologies;
+  if (resumePayload) {
+    const experience = resumePayload.body.experience[props.index]
+    const technologies = resumePayload.body.experience[props.index].technologies;
 
     let techs = technologies.map((tech, techIndex) => {
       const badgeClassName = tech.select ? "experience-badge-on mr-2 mb-2" : "experience-badge-off mr-2 mb-2"
 
       return (
         <Badge pill className={badgeClassName} key={techIndex}>
-          <button key={`btn-${techIndex}`} className="btn-edit-techs" onClick={() => handleTechOnClick(techIndex)}>
+          <button key={techIndex} className="btn-edit-techs" onClick={() => handleTechOnClick(techIndex)}>
             {tech.name}
           </button>
         </Badge>
@@ -94,36 +95,39 @@ function SortableItem(props) {
           icon={<i className="fab experience-icon"></i>}
           key={props.id}
         >
-          <div style={{ display: "flex" }}>
-            <h3
-              className="vertical-timeline-element-title"
-              style={{ textAlign: "left", width: "70%" }}
-            >
-              <input
-                style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
-                defaultValue={experience.company}
-                onChange={event => handleInputChange(props.index, "company", event)}
-              />
-            </h3>
-            <span style={{ flexGrow: "1" }} />
-            <div {...listeners} {...attributes} className="btn btn-outline-secondary" style={{ margin: "auto 0", touchAction: "none" }}>
-              <i className="fa fa-arrows-v" style={{ fontSize: "20px" }}></i>
-            </div>
-          </div>
-          <h3
-            className="vertical-timeline-element-title"
-            style={{ textAlign: "left", marginTop: "10px" }}
+
+          <h1
+            className="vertical-timeline-element-title mt-3"
+            style={{ textAlign: "left" }}
           >
             <input
               style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
               defaultValue={experience.title}
               onChange={event => handleInputChange(props.index, "title", event)}
             />
+          </h1>
+
+          <h3
+            className="vertical-timeline-element-title mt-3"
+            style={{ textAlign: "left" }}
+          >
+            <input
+              style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
+              defaultValue={experience.company}
+              onChange={event => handleInputChange(props.index, "company", event)}
+            />
           </h3>
-          <div className="form-outline">
+
+          <div >
             <textarea
-              className="form-control{border-width: 2px; border-color: grey;} mt-4 col-12"
-              id="textArea1"
+              className="mt-4 p-3"
+              style={{
+                width: "100%",
+                textAlign: "left",
+                backgroundColor: "transparent",
+                borderColor: "black",
+                fontSize: "20px",
+              }}
               rows="8"
               defaultValue={experience.description}
               onChange={event => handleInputChange(props.index, "description", event)}
@@ -131,8 +135,8 @@ function SortableItem(props) {
           </div>
           <div style={{ textAlign: "left", marginTop: "15px" }}>{techs}</div>
           <h3
-            className="vertical-timeline-element-subtitle"
-            style={{ textAlign: "left", marginTop: "10px" }}
+            className="vertical-timeline-element-subtitle mt-3"
+            style={{ textAlign: "left" }}
           >
             <input
               style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
@@ -140,12 +144,18 @@ function SortableItem(props) {
               onChange={event => handleInputChange(props.index, "years", event)}
             />
           </h3>
-          <button
-            className="btn btn-outline-secondary"
-            style={{ fontSize: "14px", marginTop: "10px" }}
-            onClick={() => showDeleteModal(props.index)}>
-            delete
-          </button>
+          <div style={{ display: "flex" }}>
+            <button
+              className="btn btn-outline-secondary mt-4"
+              style={{ fontSize: "14px" }}
+              onClick={() => showDeleteModal(props.index)}>
+              delete
+            </button>
+            <span style={{ flexGrow: "1" }} />
+            <div {...listeners} {...attributes} className="btn btn-outline-secondary mt-4" style={{ margin: "auto 0", touchAction: "none" }}>
+              <i className="fa fa-arrows-v" style={{ fontSize: "20px" }}></i>
+            </div>
+          </div>
         </VerticalTimelineElement >
       </ForwardItem >
     );

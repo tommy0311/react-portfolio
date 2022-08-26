@@ -5,25 +5,34 @@ import javascriptIcon from "@iconify/icons-logos/javascript";
 import html5Icon from "@iconify/icons-logos/html-5";
 import reactIcon from "@iconify/icons-logos/react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-function About() {
+import { updateResume } from "../store/slice/resume";
+
+function EditAbout() {
   let profilepic = "";
   let sectionName = "";
-  let hello = "";
-  let about = "";
+  let descriptionHeader = "";
+  let description = "";
 
+  const dispatch = useDispatch();
   const resume = useSelector(state => {
     return state.resume
   });
-
+  const resumePayload = resume.payload
   const basicInfo = resume.payload?.body.basicInfo
+
+  const handleInputChange = (keyName, event) => {
+    const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+    newResumePayload.body.basicInfo[keyName] = event.target.value;
+    dispatch(updateResume(newResumePayload))
+  }
 
   if (basicInfo) {
     profilepic = "/images/" + basicInfo.image;
     sectionName = basicInfo.sectionName.about;
-    hello = basicInfo.descriptionHeader;
-    about = basicInfo.description;
+    descriptionHeader = basicInfo.descriptionHeader;
+    description = basicInfo.description;
   }
 
   return (
@@ -88,10 +97,20 @@ function About() {
                   }}
                 >
                   <br />
-                  <span className="wave">{hello}</span>
+                  <input
+                    className="wave"
+                    style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "whitesmoke" }}
+                    defaultValue={descriptionHeader}
+                    onChange={event => handleInputChange("descriptionHeader", event)}
+                  />
                   <br />
                   <br />
-                  {about}
+                  <textarea
+                    style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "black" }}
+                    rows="8"
+                    defaultValue={description}
+                    onChange={event => handleInputChange("description", event)}
+                  />
                 </div>
               </div>
             </div>
@@ -102,4 +121,4 @@ function About() {
   );
 }
 
-export default About;
+export default EditAbout;

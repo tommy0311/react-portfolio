@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import ProjectDetailsModal from "./ProjectDetailsModal";
 
-function Projects(props) {
+import { useSelector } from "react-redux";
+
+function Projects() {
+  let projects = []
+  let sectionName = ""
   const [deps, setDeps] = useState({});
   const [detailsModalShow, setDetailsModalShow] = useState(false);
+
+  const resume = useSelector(state => {
+    return state.resume
+  });
+
+  const basicInfo = resume.payload?.body.basicInfo
+  const resumeProjects = resume.payload?.body.projects
 
   let detailsModalOpen = (data) => {
     setDetailsModalShow(true);
@@ -14,9 +25,9 @@ function Projects(props) {
     setDetailsModalShow(false);
   }
 
-  if (props.resumeProjects && props.resumeBasicInfo) {
-    var sectionName = props.resumeBasicInfo.sectionName.projects;
-    var projects = props.resumeProjects.map(function (projects) {
+  if (basicInfo) {
+    sectionName = basicInfo.sectionName.projects;
+    projects = resumeProjects.map(function (projects) {
       return (
         <div
           className="col-sm-12 col-md-6 col-lg-4"

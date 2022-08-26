@@ -1,17 +1,25 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-function Skills(props) {
+function Skills() {
   let sectionName = "";
   let skills = [];
 
-  if (props.sharedSkills && props.resumeBasicInfo) {
-    sectionName = props.resumeBasicInfo.sectionName.skills;
-    skills = props.sharedSkills.map(function (skill, i) {
+  const resume = useSelector(state => {
+    return state.resume
+  });
+
+  const basicInfo = resume.payload?.body.basicInfo
+  const resumeskills = resume.payload?.body.skills
+
+  if (basicInfo) {
+    sectionName = basicInfo.sectionName.skills;
+    skills = resumeskills.map(function (skill, i) {
       return skill.select ? (
         <li className="list-inline-item mx-3" key={i}>
           <span>
-            <div className="text-center skills-tile">
-              <i className={skill.class} style={{ fontSize: "220%" }}>
+            <div className="text-center skills-tile btn-edit-skills-on">
+              <i className={skill.class} style={{ fontSize: "220%", color: "#000000" }}>
                 <p
                   className="text-center"
                   style={{ fontSize: "30%", marginTop: "4px" }}

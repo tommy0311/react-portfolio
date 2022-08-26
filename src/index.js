@@ -31,8 +31,8 @@ root.render(
         <Route path=":resumeId" element={<Provider store={store}><Edit /></Provider>} />
       </Route>
       <Route path="login" element={<Login />} />
-      <Route path="show" element={< Show />} >
-        <Route path=":resumeId" element={<Show />} />
+      <Route path="show" element={<Provider store={store}>< Show /></Provider>} >
+        <Route path=":resumeId" element={<Provider store={store}>< Show /></Provider>} />
       </Route>
       <Route path="/" element={<App />} />
     </Routes>

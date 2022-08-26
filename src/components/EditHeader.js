@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import Typical from "react-typical";
 import Switch from "react-switch";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-function Header() {
+import { updateResume } from "../store/slice/resume";
+
+function EditHeader() {
   let name = "";
   let titles = [];
 
   const [checked, setChecked] = useState(false);
 
+  const dispatch = useDispatch();
   const resume = useSelector(state => {
     return state.resume
   });
-
+  const resumePayload = resume.payload
   const basicInfo = resume.payload?.body.basicInfo
 
   function onThemeSwitchChange(checked) {
@@ -29,13 +31,31 @@ function Header() {
     body.setAttribute(dataThemeAttribute, newTheme);
   }
 
+  const handleInputChange = (keyName, event) => {
+    const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+    newResumePayload.body.basicInfo[keyName] = event.target.value;
+    dispatch(updateResume(newResumePayload))
+  }
+
   if (basicInfo) {
     name = basicInfo.name;
     titles = basicInfo.titles.map(x => [x.toUpperCase(), 1500]).flat();
   }
 
   const HeaderTitleTypeAnimation = React.memo(() => {
-    return <Typical className="title-styles" steps={titles} loop={50} />
+    //return <Typical className="title-styles" steps={titles} loop={50} />
+    return <input
+      className="wave my-4"
+      style={{
+        width: "80%",
+        fontSize: "24px",
+        textAlign: "center",
+        backgroundColor: "transparent",
+        borderColor: "whitesmoke"
+      }}
+      defaultValue={titles}
+      onChange={event => handleInputChange("name", event)}
+    />
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, (prevProps, nextProps) => true);
 
@@ -47,7 +67,18 @@ function Header() {
             <span className="iconify header-icon" data-icon="la:laptop-code" data-inline="false"></span>
             <br />
             <h1 className="mb-0">
-              <Typical steps={[name]} wrapper="p" />
+              <input
+                className="wave"
+                style={{
+                  width: "50%",
+                  fontSize: "36px",
+                  textAlign: "center",
+                  backgroundColor: "transparent",
+                  borderColor: "whitesmoke"
+                }}
+                defaultValue={name}
+                onChange={event => handleInputChange("name", event)}
+              />
             </h1>
             <div className="title-container">
               <HeaderTitleTypeAnimation />
@@ -57,7 +88,7 @@ function Header() {
               onChange={onThemeSwitchChange}
               offColor="#baaa80"
               onColor="#353535"
-              className="react-switch mx-auto"
+              className="react-switch mx-auto mt-5"
               width={90}
               height={40}
               uncheckedIcon={
@@ -99,4 +130,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default EditHeader;

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -6,60 +7,75 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import Badge from "react-bootstrap/Badge";
 
-function Experience(props) {
+function Experience() {
   let sectionName = "";
   let works = [];
 
-  if (props.resumeExperience && props.resumeBasicInfo) {
-    sectionName = props.resumeBasicInfo.sectionName.experience;
-    works = props.resumeExperience.map(function (work, i) {
-      const technologies = work.technologies;
-      const mainTechnologies = work.mainTech;
+  const resume = useSelector(state => {
+    return state.resume
+  });
 
-      var mainTech = mainTechnologies.map((technology, i) => {
-        return (
-          <Badge pill className="main-badge mr-2 mb-2" key={i}>
-            {technology}
-          </Badge>
-        );
+  const basicInfo = resume.payload?.body.basicInfo
+  const experience = resume.payload?.body ? resume.payload?.body.experience : []
+
+
+  if (resume.payload && basicInfo) {
+
+    sectionName = basicInfo.sectionName.experience;
+    works = experience.map((work, workIndex) => {
+      const technologies = work.technologies;
+
+      let techs = technologies.map((tech, techIndex) => {
+        return tech.select ? (
+          <Badge pill className="experience-badge mr-2 mb-2" key={techIndex}>
+            {tech.name}
+          </Badge>) : null
       });
-      var tech = technologies.map((technology, i) => {
-        return (
-          <Badge pill className="experience-badge mr-2 mb-2" key={i}>
-            {technology}
-          </Badge>
-        );
-      });
+
       return (
         <VerticalTimelineElement
           className="vertical-timeline-element--work"
-          date={work.years}
           contentStyle={{ width: "80%" }}
           iconStyle={{
             background: "#AE944F",
             color: "#fff",
             textAlign: "center",
           }}
-          icon={<i className="fab fa-angular experience-icon"></i>}
-          key={i}
+          icon={<i className="fab experience-icon"></i>}
+          key={workIndex}
         >
-          <div style={{ textAlign: "left", marginBottom: "4px" }}>
-            {mainTech}
-          </div>
-
-          <h3
-            className="vertical-timeline-element-title"
+          <h1
+            className="vertical-timeline-element-title ml-3 my-1"
             style={{ textAlign: "left" }}
           >
             {work.title}
-          </h3>
-          <h4
-            className="vertical-timeline-element-subtitle"
+          </h1>
+          <h3
+            className="vertical-timeline-element-subtitle ml-3 mt-3"
             style={{ textAlign: "left" }}
           >
             {work.company}
+          </h3>
+          <textarea
+            className="mt-4 p-3"
+            style={{
+              width: "100%",
+              textAlign: "left",
+              backgroundColor: "transparent",
+              borderColor: "black",
+              fontSize: "20px",
+            }}
+            rows="8"
+            readOnly="readonly"
+            defaultValue={work.description}
+          />
+          <div className="ml-1" style={{ textAlign: "left", marginTop: "15px" }}>{techs}</div>
+          <h4
+            className="vertical-timeline-element-subtitle ml-1 mt-2"
+            style={{ textAlign: "left" }}
+          >
+            {work.years}
           </h4>
-          <div style={{ textAlign: "left", marginTop: "15px" }}>{tech}</div>
         </VerticalTimelineElement>
       );
     });
@@ -84,9 +100,16 @@ function Experience(props) {
               background: "#AE944F",
               color: "#fff",
               textAlign: "center",
+              fontSize: "20px"
             }}
             icon={
-              <i className="fas fa-hourglass-start mx-auto experience-icon"></i>
+              <i className="fa fa-hourglass-start"
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)"
+                }}></i>
             }
           />
         </VerticalTimeline>

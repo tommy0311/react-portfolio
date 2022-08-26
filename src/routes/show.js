@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import $ from "jquery";
 import "../App.scss";
 import Header from "../components/Header";
@@ -9,16 +10,14 @@ import Experience from "../components/Experience";
 import Projects from "../components/Projects";
 import Skills from "../components/Skills";
 
-function Show(props) {
-  let { resumeId } = useParams();
+import { fetchResumeById } from "../store/slice/resume";
 
-  const [localResumeData, setLocalResumeData] = useState({});
-  const [resumeData, setResumeData] = useState({});
-  const [sharedData, setSharedData] = useState({});
+function Show() {
+  let { resumeId } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    loadResume();
-    loadSharedData();
+    dispatch(fetchResumeById(resumeId))
     applyPickedLanguage(
       window.$primaryLanguage,
       window.$secondaryLanguageIconId
@@ -55,47 +54,15 @@ function Show(props) {
       dataType: "json",
       cache: false,
       success: function (data) {
-        setLocalResumeData(data);
       },
       error: function (xhr, status, err) {
       },
     });
-  }
-
-  let loadSharedData = () => {
-    $.ajax({
-      url: `/portfolio_shared_data.json`,
-      dataType: "json",
-      cache: false,
-      success: function (data) {
-        setSharedData(data);
-        document.title = `${data.basic_info.name}`;
-      },
-      error: function (xhr, status, err) {
-      },
-    });
-  }
-
-  let loadResume = () => {
-    $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
-      dataType: "json",
-      cache: false,
-      success: function (data) {
-        setResumeData(data)
-      },
-      error: function (xhr, status, err) {
-      },
-    });
-  }
-
-  if (resumeData === {}) {
-    return
   }
 
   return (
     <div>
-      <Header sharedData={sharedData.basic_info} />
+      <Header />
       <div className="col-md-12 mx-auto text-center language" style={{ display: "none" }}>
         <div
           onClick={() =>
@@ -130,23 +97,11 @@ function Show(props) {
           ></span>
         </div>
       </div>
-      <About
-        resumeBasicInfo={localResumeData.basic_info}
-        sharedBasicInfo={sharedData.basic_info}
-      />
-      <Projects
-        resumeProjects={localResumeData.projects}
-        resumeBasicInfo={localResumeData.basic_info}
-      />
-      <Skills
-        sharedSkills={resumeData.skills}
-        resumeBasicInfo={localResumeData.basic_info}
-      />
-      <Experience
-        resumeExperience={localResumeData.experience}
-        resumeBasicInfo={localResumeData.basic_info}
-      />
-      <Footer sharedBasicInfo={sharedData.basic_info} />
+      <About />
+      <Projects />
+      <Skills />
+      <Experience />
+      <Footer />
     </div>
   );
 

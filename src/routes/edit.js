@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import $ from "jquery";
 
 import "../App.scss";
-import Header from "../components/Header";
+import EditHeader from "../components/EditHeader";
 import Footer from "../components/Footer";
-import About from "../components/About";
+import EditAbout from "../components/EditAbout";
 import EditExperience from "../components/EditExperience";
 import Projects from "../components/Projects";
 import EditSkills from "../components/EditSkills";
@@ -14,11 +14,8 @@ import DialogModal from "../components/DialogModal"
 import { fetchResumeById, fetchTechnologies } from "../store/slice/resume";
 import { showModal } from "../store/slice/modal";
 
-function Edit(props) {
+function Edit() {
   let { resumeId } = useParams();
-
-  const [localResumeData, setLocalResumeData] = useState({});
-  const [resumeData, setResumeData] = useState({});
 
   const resume = useSelector(state => {
     return state.resume
@@ -31,8 +28,6 @@ function Edit(props) {
   useEffect(() => {
     dispatch(fetchResumeById(resumeId))
     dispatch(fetchTechnologies())
-    loadResumeData();
-    //loadSharedData();
     applyPickedLanguage(
       window.$primaryLanguage,
       window.$secondaryLanguageIconId
@@ -69,20 +64,6 @@ function Edit(props) {
       dataType: "json",
       cache: false,
       success: function (data) {
-        setLocalResumeData(data);
-      },
-      error: function (xhr, status, err) {
-      },
-    });
-  }
-
-  const loadResumeData = () => {
-    $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
-      dataType: "json",
-      cache: false,
-      success: function (response) {
-        setResumeData(response.body)
       },
       error: function (xhr, status, err) {
       },
@@ -112,13 +93,9 @@ function Edit(props) {
     });
   }
 
-  if (localResumeData === {} || resumeData === {}) {
-    return 
-  }
-
   return (
     <div>
-      <Header sharedData={resumeData.basicInfo} />
+      <EditHeader />
       <div className="col-md-12 mx-auto text-center language" style={{ display: "none" }}>
         <div
           onClick={() =>
@@ -153,17 +130,11 @@ function Edit(props) {
           ></span>
         </div>
       </div>
-      <About
-        resumeBasicInfo={resumeData.basicInfo}
-        sharedBasicInfo={resumeData.basicInfo}
-      />
-      <Projects
-        resumeProjects={resumeData.projects}
-        resumeBasicInfo={resumeData.basicInfo}
-      />
+      <EditAbout />
+      <Projects />
       <EditSkills />
       <EditExperience />
-      <Footer sharedBasicInfo={resumeData.basicInfo} />
+      <Footer />
 
       <section id="updateResume">
         <div className="d-flex col-12" >
