@@ -14,17 +14,31 @@ const DialogModal = forwardRef((props, ref) => {
     return state.modal
   });
 
+  if (!modal.payload) {
+    return
+  }
+
+  switch (modal.payload.name) {
+    case "updateReumseOkModal":
+    case "deleteWorkModal":
+      break
+
+    default:
+      return
+  }
+
   const handleClose = () => dispatch(hideModal());
 
   const handleClickBtn2 = () => {
-    if (modal.payload && modal.payload.name === 'deleteWorkModal') {
-      dispatch(updateResume(modal.payload.newResume))
+    switch (modal.payload.name) {
+      case "deleteWorkModal":
+        dispatch(updateResume(modal.payload.newResume))
+        break
+
+      default:
+        break
     }
     dispatch(hideModal())
-  };
-
-  if (!modal.payload) {
-    return
   }
 
   return (

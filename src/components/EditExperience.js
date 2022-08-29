@@ -38,8 +38,7 @@ const EditExperience = (props) => {
 
   const resumePayload = resume.payload
   const resumeBody = resume.payload?.body
-
-  const experience = resumeBody ? resumeBody.experience : []
+  const experience = resumeBody ? resumeBody.experience : null
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -48,6 +47,10 @@ const EditExperience = (props) => {
     }),
     useSensor(TouchSensor)
   );
+
+  if (!experience) {
+    return
+  }
 
   const handleDragStart = (event) => {
     setActiveId(event.active.id);
@@ -84,7 +87,7 @@ const EditExperience = (props) => {
     dispatch(updateResume(newResumePayload))
   }
 
-  if (resumePayload) {
+  if (experience) {
     sectionName = resumeBody.basicInfo.sectionName.experience;
     works = experience.map((work, index) => {
       return (

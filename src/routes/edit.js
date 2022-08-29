@@ -11,6 +11,7 @@ import EditExperience from "../components/EditExperience";
 import Projects from "../components/Projects";
 import EditSkills from "../components/EditSkills";
 import DialogModal from "../components/DialogModal"
+import EditRawModal from "../components/EditRawModal"
 import { fetchResumeById, fetchTechnologies } from "../store/slice/resume";
 import { showModal } from "../store/slice/modal";
 
@@ -93,6 +94,18 @@ function Edit() {
     });
   }
 
+  const showEditRawModal = () => {
+    dispatch(showModal(
+      {
+        name: "editRawModal",
+        title: "Raw",
+        message: resume.payload,
+        btn1Label: "Cancel",
+        btn2Label: "Ok",
+      }
+    ))
+  }
+
   return (
     <div>
       <EditHeader />
@@ -135,23 +148,25 @@ function Edit() {
       <EditSkills />
       <EditExperience />
       <Footer />
+      <DialogModal />
+      <EditRawModal />
 
       <section id="updateResume">
         <div className="d-flex col-12" >
-          <div className="col-5 mx-auto btn-update-resume">
-            <h1 className="section-title" style={{ color: "black" }}>
-              <span className="text-black">Back</span>
-            </h1>
+          <div className="col-3 mx-auto btn-update-resume">
+            <span className="center my-3" style={{ fontSize: "20px" }}>BACK</span>
+          </div>
+          <div className="col-3 btn-update-resume"
+            onClick={showEditRawModal} data-bs-toggle="modal" >
+            <span className="center my-3" style={{ fontSize: "20px" }}>RAW</span>
           </div>
           <div
-            className="col-5 mx-auto btn-update-resume"
+            className="col-3 mx-auto btn-update-resume"
             onClick={putResumeBody} data-bs-toggle="modal" >
-            <h1 className="section-title" style={{ color: "black" }}>
-              <span className="text-black">Save</span>
-            </h1>
+            <span className="center my-3" style={{ fontSize: "20px" }}>SAVE</span>
           </div>
         </div>
-        <DialogModal />
+
       </section>
       <button onClick={() => console.log("resumeData " + JSON.stringify(resume))}>print</button>
     </div>

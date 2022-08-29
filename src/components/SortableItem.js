@@ -48,7 +48,7 @@ function SortableItem(props) {
         message: "Do you want to delete this item?",
         btn2Label: "Yes",
         btn1Label: "No",
-        newResume: resumePayload
+        newResume: newResumePayload
       }
     ))
   }

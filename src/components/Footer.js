@@ -26,9 +26,8 @@ function Footer() {
 
   return (
     <footer>
-      <div className="col-md-12 py-5">
+      <div className="col-12 my-5">
         {/*<div className="social-links">{networks}</div>*/}
-
         <div className="copyright  text-center">
           <div className="container">
             {basicInfo

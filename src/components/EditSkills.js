@@ -8,8 +8,10 @@ function EditSkills() {
 
   const dispatch = useDispatch();
   const resume = useSelector(state => {
-    return state.resume.payload
+    return state.resume
   });
+  const resumePayload = resume.payload
+  const basicInfo = resume.payload?.body.basicInfo
 
   const onClickCB = (index) => {
     const newResume = JSON.parse(JSON.stringify(resume));
@@ -17,9 +19,9 @@ function EditSkills() {
     dispatch(updateResume(newResume))
   }
 
-  if (resume) {
-    sectionName = resume.body.basicInfo.sectionName.skills;
-    icons = resume.body.skills.map((skill, index) => {
+  if (basicInfo) {
+    sectionName = basicInfo.sectionName.skills;
+    icons = resumePayload.body.skills.map((skill, index) => {
       return (
         <button key={`btn-${index}`} className={skill.select === true ? "btn-edit-skills-on" : "btn-edit-skills-off"}
           onClick={() => onClickCB(index)}>
