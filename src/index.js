@@ -9,7 +9,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "./routes/login";
 import Edit from "./routes/edit";
+import EditRaw from "./routes/editRaw";
 import Show from "./routes/show";
+import Main from "./routes/main";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -30,11 +32,14 @@ root.render(
       <Route path="edit" element={<Provider store={store}><Edit /></Provider>} >
         <Route path=":resumeId" element={<Provider store={store}><Edit /></Provider>} />
       </Route>
+      <Route path="raw" element={<Provider store={store}><EditRaw /></Provider>} >
+        <Route path=":resumeId" element={<Provider store={store}><EditRaw /></Provider>} />
+      </Route>
       <Route path="login" element={<Login />} />
       <Route path="show" element={<Provider store={store}>< Show /></Provider>} >
         <Route path=":resumeId" element={<Provider store={store}>< Show /></Provider>} />
       </Route>
-      <Route path="/" element={<App />} />
+      <Route path="/" element={<Provider store={store}><Main /></Provider>} />
     </Routes>
   </BrowserRouter>
 

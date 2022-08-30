@@ -14,9 +14,9 @@ function EditSkills() {
   const basicInfo = resume.payload?.body.basicInfo
 
   const onClickCB = (index) => {
-    const newResume = JSON.parse(JSON.stringify(resume));
-    newResume.body.skills[index].select = !newResume.body.skills[index].select;
-    dispatch(updateResume(newResume))
+    const newResumePayload = JSON.parse(JSON.stringify(resumePayload));
+    newResumePayload.body.skills[index].select = !newResumePayload.body.skills[index].select;
+    dispatch(updateResume(newResumePayload))
   }
 
   if (basicInfo) {

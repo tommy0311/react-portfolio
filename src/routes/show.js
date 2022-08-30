@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import $ from "jquery";
 import "../App.scss";
 import Header from "../components/Header";
@@ -14,14 +14,22 @@ import { fetchResumeById } from "../store/slice/resume";
 
 function Show() {
   let { resumeId } = useParams();
+  const mountedRef = useRef(false);
+
+  const resume = useSelector(state => {
+    return state.resume
+  });
+  const resumePayload = resume.payload
+
   const dispatch = useDispatch();
 
   useEffect(() => {
+    mountedRef.current = true;
     dispatch(fetchResumeById(resumeId))
-    applyPickedLanguage(
-      window.$primaryLanguage,
-      window.$secondaryLanguageIconId
-    );
+    //applyPickedLanguage(
+    //  window.$primaryLanguage,
+    //  window.$secondaryLanguageIconId
+    //);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,6 +66,10 @@ function Show() {
       error: function (xhr, status, err) {
       },
     });
+  }
+
+  if (!mountedRef.current) {
+    return
   }
 
   return (

@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import Container from 'react-bootstrap/Container';
 import $ from "jquery";
 
 import "../App.scss";
@@ -11,17 +12,18 @@ import EditExperience from "../components/EditExperience";
 import Projects from "../components/Projects";
 import EditSkills from "../components/EditSkills";
 import DialogModal from "../components/DialogModal"
-import EditRawModal from "../components/EditRawModal"
 import { fetchResumeById, fetchTechnologies } from "../store/slice/resume";
 import { showModal } from "../store/slice/modal";
 
 function Edit() {
   let { resumeId } = useParams();
+  const navigate = useNavigate();
+  const mountedRef = useRef(false);
 
   const resume = useSelector(state => {
     return state.resume
   });
-
+  const resumePayload = resume.payload
   const resumeBody = resume.payload?.body
 
   const dispatch = useDispatch();
@@ -29,10 +31,11 @@ function Edit() {
   useEffect(() => {
     dispatch(fetchResumeById(resumeId))
     dispatch(fetchTechnologies())
-    applyPickedLanguage(
-      window.$primaryLanguage,
-      window.$secondaryLanguageIconId
-    );
+    mountedRef.current = true;
+    //applyPickedLanguage(
+    //  window.$primaryLanguage,
+    //  window.$secondaryLanguageIconId
+    //);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,16 +97,8 @@ function Edit() {
     });
   }
 
-  const showEditRawModal = () => {
-    dispatch(showModal(
-      {
-        name: "editRawModal",
-        title: "Raw",
-        message: resume.payload,
-        btn1Label: "Cancel",
-        btn2Label: "Ok",
-      }
-    ))
+  if (!mountedRef.current) {
+    return
   }
 
   return (
@@ -149,26 +144,23 @@ function Edit() {
       <EditExperience />
       <Footer />
       <DialogModal />
-      <EditRawModal />
 
       <section id="updateResume">
-        <div className="d-flex col-12" >
-          <div className="col-3 mx-auto btn-update-resume">
+        <Container className="d-flex col-11 center" >
+          <div
+            className="col-5 mx-auto btn-update-resume"
+            onClick={() => navigate(-1)}
+          >
             <span className="center my-3" style={{ fontSize: "20px" }}>BACK</span>
           </div>
-          <div className="col-3 btn-update-resume"
-            onClick={showEditRawModal} data-bs-toggle="modal" >
-            <span className="center my-3" style={{ fontSize: "20px" }}>RAW</span>
-          </div>
           <div
-            className="col-3 mx-auto btn-update-resume"
+            className="col-5 mx-auto btn-update-resume"
             onClick={putResumeBody} data-bs-toggle="modal" >
             <span className="center my-3" style={{ fontSize: "20px" }}>SAVE</span>
           </div>
-        </div>
+        </Container>
 
       </section>
-      <button onClick={() => console.log("resumeData " + JSON.stringify(resume))}>print</button>
     </div>
   );
 }

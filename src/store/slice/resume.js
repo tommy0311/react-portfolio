@@ -48,7 +48,6 @@ export const resumeSlice = createSlice({
       state.payload = action.payload
     })
     builder.addCase(fetchTechnologies.fulfilled, (state, action) => {
-
       state.technologies = action.payload
     })
   },
