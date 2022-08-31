@@ -10,8 +10,9 @@ import { useSelector } from "react-redux";
 function About() {
   let profilepic = "";
   let sectionName = "";
-  let hello = "";
-  let about = "";
+  let descriptionHeader = "";
+  let description = "";
+
 
   const resume = useSelector(state => {
     return state.resume
@@ -22,8 +23,8 @@ function About() {
   if (basicInfo) {
     profilepic = "/images/" + basicInfo.image;
     sectionName = basicInfo.sectionName.about;
-    hello = basicInfo.descriptionHeader;
-    about = basicInfo.description;
+    descriptionHeader = basicInfo.descriptionHeader;
+    description = basicInfo.description;
   }
 
   return (
@@ -88,10 +89,21 @@ function About() {
                   }}
                 >
                   <br />
-                  <span className="wave">{hello}</span>
+                  <span className="wave">{descriptionHeader}</span>
                   <br />
                   <br />
-                  {about}
+                  <textarea
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      backgroundColor: "transparent",
+                      borderColor: "black",
+                      fontSize: "16px"
+                    }}
+                    rows="8"
+                    readOnly="readonly"
+                    defaultValue={description}
+                  />
                 </div>
               </div>
             </div>

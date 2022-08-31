@@ -11,23 +11,9 @@ function Footer() {
 
   const basicInfo = resume.payload?.body.basicInfo
 
-  if (basicInfo) {
-    /*
-    networks = basicInfo.social.map(function (network) {
-      return (
-        <span key={network.name} className="m-4">
-          <a href={network.url} target="_blank" rel="noopener noreferrer">
-            <i className={network.class}></i>
-          </a>
-        </span>
-      );
-    });*/
-  }
-
   return (
     <footer>
-      <div className="col-12 my-5">
-        {/*<div className="social-links">{networks}</div>*/}
+      <div className="d-flex center col-12 my-5">
         <div className="copyright  text-center">
           <div className="container">
             {basicInfo
@@ -35,6 +21,11 @@ function Footer() {
               : null}
           </div>
         </div>
+        <span key="home" className="m-4" >
+          <a href="/" target="_self" rel="noopener noreferrer">
+            <i className="fa fa-home" style={{ fontSize: "200%", color: "whitesmoke", ariaHidden: "true" }}></i>
+          </a>
+        </span>
       </div>
     </footer>
   );

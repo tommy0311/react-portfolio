@@ -18,6 +18,16 @@ function EditHeader() {
   const resumePayload = resume.payload
   const basicInfo = resume.payload?.body.basicInfo
 
+  let networks = basicInfo?.social.map(function (network) {
+    return (
+      <span key={network.name} className="m-4" >
+        <a href={network.url} target="_blank" rel="noopener noreferrer">
+          <i className={network.class} style={{ fontSize: "400%", color: "black" }}></i>
+        </a>
+      </span>
+    );
+  });
+
   function onThemeSwitchChange(checked) {
     setChecked(checked);
     setTheme();
@@ -132,6 +142,7 @@ function EditHeader() {
             </div>
           </div>
         </div>
+        {networks}
       </div>
     </header>
   );

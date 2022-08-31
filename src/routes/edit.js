@@ -18,7 +18,7 @@ import { showModal } from "../store/slice/modal";
 function Edit() {
   let { resumeId } = useParams();
   const navigate = useNavigate();
-  const mountedRef = useRef(false);
+  const fetchTimeRef = useRef(Date.now());
 
   const resume = useSelector(state => {
     return state.resume
@@ -31,7 +31,6 @@ function Edit() {
   useEffect(() => {
     dispatch(fetchResumeById(resumeId))
     dispatch(fetchTechnologies())
-    mountedRef.current = true;
     //applyPickedLanguage(
     //  window.$primaryLanguage,
     //  window.$secondaryLanguageIconId
@@ -97,7 +96,7 @@ function Edit() {
     });
   }
 
-  if (!mountedRef.current) {
+  if (resumePayload?.updateTime <= fetchTimeRef.current) {
     return
   }
 

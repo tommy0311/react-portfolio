@@ -21,6 +21,16 @@ function Header() {
     setTheme();
   }
 
+  let networks = basicInfo?.social.map(function (network) {
+    return (
+      <span key={network.name} className="m-4" >
+        <a href={network.url} target="_blank" rel="noopener noreferrer">
+          <i className={network.class} style={{ fontSize: "400%", color: "black", ariaHidden: "true" }}></i>
+        </a>
+      </span>
+    );
+  });
+
   function setTheme() {
     const dataThemeAttribute = "data-theme";
     const body = document.body;
@@ -89,8 +99,7 @@ function Header() {
         />
       </div>
       <div className="row aligner" style={{ height: '100%' }}>
-
-        <div className="col-md-12">
+        <div className="col-12">
           <div>
             <span className="iconify header-icon" data-icon="la:laptop-code" data-inline="false"></span>
             <br />
@@ -100,6 +109,7 @@ function Header() {
             <div className="title-container">
               <HeaderTitleTypeAnimation />
             </div>
+            {networks}
           </div>
         </div>
       </div>

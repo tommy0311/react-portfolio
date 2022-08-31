@@ -1,13 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import $ from "jquery";
 
-import { fetchResumeById, fetchTechnologies } from "../store/slice/resume";
+import { fetchResumeById } from "../store/slice/resume";
 import DialogModal from "../components/DialogModal"
 import { showModal } from "../store/slice/modal";
 
@@ -17,7 +16,7 @@ import "../App.scss";
 function EditRaw() {
   let { resumeId } = useParams();
   const navigate = useNavigate();
-  const mountedRef = useRef(false);
+  const fetchTimeRef = useRef(Date.now());
 
   const dispatch = useDispatch();
   const resume = useSelector(state => {
@@ -25,13 +24,16 @@ function EditRaw() {
   });
   const resumePayload = resume.payload
   const resumeBody = resume.payload?.body
-  const resumeBodyRef = useRef("")
+  const resumeBodyRef = useRef(null)
 
   useEffect(() => {
-    mountedRef.current = true;
     dispatch(fetchResumeById(resumeId))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    resumeBodyRef.current = JSON.stringify(resume.payload?.body)
+  }, [resume]);
 
   const handleInputChange = (event) => {
     resumeBodyRef.current = event.target.value
@@ -60,7 +62,7 @@ function EditRaw() {
     });
   }
 
-  if (!mountedRef.current) {
+  if (resumePayload?.updateTime <= fetchTimeRef.current) {
     return
   }
 
@@ -96,7 +98,6 @@ function EditRaw() {
         >
           <span className="center my-3" style={{ fontSize: "20px" }}>BACK</span>
         </div>
-
         <div
           className="col-5 mx-auto btn-update-resume"
           onClick={putResumeBody} >

@@ -513,14 +513,14 @@ footer a:focus {
   box-sizing: border-box;
 }
 
-.form-signin #inputEmail,
+.form-signin #inputAccount,
 .form-signin #inputPassword {
   direction: ltr;
-  height: 44px;
-  font-size: 16px;
+  height: 36px;
+  font-size: 14px;
 }
 
-.form-signin input[type=email],
+.form-signin input[type=account],
 .form-signin input[type=password],
 .form-signin input[type=text],
 .form-signin button {
@@ -543,7 +543,7 @@ footer a:focus {
 
 .btn.btn-signin {
   /*background-color: #4d90fe; */
-  background-color: rgb(104, 145, 162);
+background-color: transparent;
   /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
   padding: 0px;
   font-weight: 700;
@@ -562,7 +562,7 @@ footer a:focus {
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
-background-color: rgb(104, 145, 162);
+background-color: #404040;
 }
 
 .forgot-password {

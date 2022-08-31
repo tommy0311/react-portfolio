@@ -2,7 +2,6 @@ import React from 'react';
 //import ReactDOM from 'react-dom';
 import * as ReactDOM from 'react-dom/client';
 import './index.scss';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -35,7 +34,7 @@ root.render(
       <Route path="raw" element={<Provider store={store}><EditRaw /></Provider>} >
         <Route path=":resumeId" element={<Provider store={store}><EditRaw /></Provider>} />
       </Route>
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<Provider store={store}><Login /></Provider>} />
       <Route path="show" element={<Provider store={store}>< Show /></Provider>} >
         <Route path=":resumeId" element={<Provider store={store}>< Show /></Provider>} />
       </Route>

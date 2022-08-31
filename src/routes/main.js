@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -11,10 +11,7 @@ import "../App.scss";
 function Main() {
   let cards = null
   const [resumes, setResumes] = useState([])
-  const mountedRef = useRef(false);
-
   useEffect(() => {
-    mountedRef.current = true;
     fetchResumes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -25,6 +22,17 @@ function Main() {
       dataType: "json",
       cache: false,
       success: function (response) {
+        response.sort((a, b) => {
+          let nameA = a.name.toUpperCase();
+          let nameB = b.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        })
         setResumes(response)
         return
       },
@@ -32,10 +40,6 @@ function Main() {
         throw err
       },
     });
-  }
-
-  if (!mountedRef.current) {
-    return
   }
 
   if (resumes.length > 0) {
@@ -52,7 +56,7 @@ function Main() {
                 {resume.name}
               </p>
             </div>
-            <div className="d-flex flex-column center">
+            <Container className="d-flex flex-column center">
               <Link
                 className="col-10 my-3"
                 style={{ fontSize: "24px", color: "black", borderStyle: "solid", padding: "10px" }}
@@ -71,7 +75,7 @@ function Main() {
                 to={`/show/${resume.resumeId}`}>
                 OPEN
               </Link>
-            </div>
+            </Container>
           </span>
         </div>
       )

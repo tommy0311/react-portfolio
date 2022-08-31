@@ -14,7 +14,7 @@ import { fetchResumeById } from "../store/slice/resume";
 
 function Show() {
   let { resumeId } = useParams();
-  const mountedRef = useRef(false);
+  const fetchTimeRef = useRef(Date.now());
 
   const resume = useSelector(state => {
     return state.resume
@@ -24,7 +24,6 @@ function Show() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    mountedRef.current = true;
     dispatch(fetchResumeById(resumeId))
     //applyPickedLanguage(
     //  window.$primaryLanguage,
@@ -68,7 +67,7 @@ function Show() {
     });
   }
 
-  if (!mountedRef.current) {
+  if (resumePayload?.updateTime <= fetchTimeRef.current) {
     return
   }
 
