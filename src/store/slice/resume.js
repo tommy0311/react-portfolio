@@ -47,7 +47,6 @@ export const resumeSlice = createSlice({
     builder.addCase(fetchResumeById.fulfilled, (state, action) => {
       action.payload.updateTime = Date.now()
       state.payload = action.payload
-
     })
     builder.addCase(fetchTechnologies.fulfilled, (state, action) => {
       state.technologies = action.payload

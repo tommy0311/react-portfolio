@@ -1,24 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import $ from "jquery";
 
+import { userLogout } from "../store/slice/user";
 import "../App.scss";
 
 
 function Main() {
   let cards = null
+  const dispatch = useDispatch();
+
   const [resumes, setResumes] = useState([])
+
+  const user = useSelector(state => {
+    return state.user
+  });
+  const userPayload = user.payload
+
   useEffect(() => {
     fetchResumes()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    dispatch(userLogout())
+  }
+
   const fetchResumes = () => {
     $.ajax({
       url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes`,
+      type: "get",
+      headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
       dataType: "json",
       cache: false,
       success: function (response) {
@@ -82,20 +99,20 @@ function Main() {
     })
   }
 
-
   return (
     <div>
       <Navbar bg="dark" variant="dark" className="mb-5">
         <Container className="d-flex col-12" >
           <Navbar.Brand style={{ fontSize: "24px" }} href="#">SMART RESUME</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link style={{ fontSize: "24px" }} href="#home">logout</Nav.Link>
+            <Nav.Link onClick={handleLogout} style={{ fontSize: "24px" }} href="#">logout</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-      <div className="d-flex flex-wrap center">
+      <h1 className="col-12 center mb-5">{userPayload.account}`s resumes</h1>
+      <div className="d-flex flex-wrap">
         {cards}
-      </div>
+      </div> 
     </div>
   );
 

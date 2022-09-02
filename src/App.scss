@@ -661,3 +661,16 @@ color: rgb(104, 145, 162);
 .btn-edit-techs:active {
   background-color: #696969;
 }
+.btn-user-login {
+  margin: 10px auto;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #696969;
+  background-color: whitesmoke;
+  color: black;
+}
+
+.btn-user-login:active {
+  background-color: #696969;
+  color: whitesmoke;
+}

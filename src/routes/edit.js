@@ -64,7 +64,9 @@ function Edit() {
   const loadResumeFromPath = (path) => {
     $.ajax({
       url: path,
+      type: "get",
       dataType: "json",
+      headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
       cache: false,
       success: function (data) {
       },
@@ -76,8 +78,9 @@ function Edit() {
   const putResumeBody = () => {
     $.ajax({
       url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
-      dataType: 'json',
       type: 'put',
+      dataType: 'json',
+      headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
       contentType: 'application/json',
       data: JSON.stringify(resumeBody),
       processData: false,
@@ -96,7 +99,7 @@ function Edit() {
     });
   }
 
-  if (resumePayload?.updateTime <= fetchTimeRef.current) {
+  if (!resumePayload || resumePayload.updateTime <= fetchTimeRef.current) {
     return
   }
 

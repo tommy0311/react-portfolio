@@ -21,6 +21,7 @@ const DialogModal = forwardRef((props, ref) => {
   switch (modal.payload.name) {
     case "updateReumseOkModal":
     case "deleteWorkModal":
+    case "loginFailModal":
       break
 
     default:

@@ -59,7 +59,7 @@ function EditHeader() {
   }
 
   return (
-    <header id="home" style={{ height: window.innerHeight - 140, display: 'block' }}>
+    <header id="home" style={{ height: '80vh', display: 'block' }}>
       <div style={{
         position: "absolute",
         top: "2vh",
@@ -126,9 +126,9 @@ function EditHeader() {
                 onChange={event => handleInputChange("name", event)}
               />
             </h1>
-            <div className="title-container">
+            <div className="title-container my-4 ">
               <input
-                className="wave my-4"
+                className="wave "
                 style={{
                   width: "80%",
                   fontSize: "24px",
@@ -140,9 +140,9 @@ function EditHeader() {
                 onChange={event => handleInputChange("titles", event)}
               />
             </div>
+            {networks}
           </div>
         </div>
-        {networks}
       </div>
     </header>
   );

@@ -50,7 +50,7 @@ function Header() {
   }, (prevProps, nextProps) => true);
 
   return (
-    <header id="home" style={{ height: window.innerHeight - 140, display: 'block' }}>
+    <header id="home" style={{ height: '80vh', display: 'block' }}>
       <div style={{
         position: "absolute",
         top: "2vh",

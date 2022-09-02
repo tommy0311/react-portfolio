@@ -11,6 +11,8 @@ import Edit from "./routes/edit";
 import EditRaw from "./routes/editRaw";
 import Show from "./routes/show";
 import Main from "./routes/main";
+import ProtectedLayout from "./components/ProtectedLayout"
+import HomeLayout from "./components/HomeLayout"
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -28,20 +30,31 @@ root.render(
 
   <BrowserRouter>
     <Routes>
-      <Route path="edit" element={<Provider store={store}><Edit /></Provider>} >
+      <Route path="edit" element={<Provider store={store}><ProtectedLayout /></Provider>} >
+        <Route path="" element={<h1>404 Not Found</h1>} />
         <Route path=":resumeId" element={<Provider store={store}><Edit /></Provider>} />
       </Route>
-      <Route path="raw" element={<Provider store={store}><EditRaw /></Provider>} >
+      <Route path="raw" element={<Provider store={store}><ProtectedLayout /></Provider>} >
+        <Route path="" element={<h1>404 Not Found</h1>} />
         <Route path=":resumeId" element={<Provider store={store}><EditRaw /></Provider>} />
       </Route>
-      <Route path="login" element={<Provider store={store}><Login /></Provider>} />
-      <Route path="show" element={<Provider store={store}>< Show /></Provider>} >
-        <Route path=":resumeId" element={<Provider store={store}>< Show /></Provider>} />
-      </Route>
-      <Route path="/" element={<Provider store={store}><Main /></Provider>} />
-    </Routes>
-  </BrowserRouter>
 
+      <Route element={<Provider store={store}><HomeLayout /></Provider>}>
+        <Route path="/login" element={<Login />} />
+      </Route>
+
+      <Route path="show" >
+        <Route path="" element={<h1>404 Not Found</h1>} />
+        <Route path=":resumeId" element={<Provider store={store}><Show /></Provider>} />
+      </Route>
+
+      <Route element={<Provider store={store}><ProtectedLayout /></Provider>}>
+        <Route path="/" element={<Main />} />
+      </Route>
+
+      <Route path="*" element={<h1>404 Not Found</h1>} />
+    </Routes>
+  </BrowserRouter >
 )
 
 serviceWorker.register();

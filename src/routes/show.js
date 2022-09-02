@@ -58,7 +58,9 @@ function Show() {
   let loadResumeFromPath = (path) => {
     $.ajax({
       url: path,
-      dataType: "json",
+      type: 'get',
+      dataType: 'json',
+      headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
       cache: false,
       success: function (data) {
       },
@@ -67,7 +69,7 @@ function Show() {
     });
   }
 
-  if (resumePayload?.updateTime <= fetchTimeRef.current) {
+  if (!resumePayload || resumePayload.updateTime <= fetchTimeRef.current) {
     return
   }
 

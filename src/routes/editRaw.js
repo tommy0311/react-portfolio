@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import $ from "jquery";
 
@@ -42,8 +41,9 @@ function EditRaw() {
   const putResumeBody = () => {
     $.ajax({
       url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
-      dataType: 'json',
       type: 'put',
+      dataType: 'json',
+      headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
       contentType: 'application/json',
       data: resumeBodyRef.current,
       processData: false,
@@ -62,7 +62,7 @@ function EditRaw() {
     });
   }
 
-  if (resumePayload?.updateTime <= fetchTimeRef.current) {
+  if (!resumePayload || resumePayload.updateTime <= fetchTimeRef.current) {
     return
   }
 
@@ -71,9 +71,6 @@ function EditRaw() {
       <Navbar bg="dark" variant="dark" className="mb-5">
         <Container className="d-flex col-12" >
           <Navbar.Brand style={{ fontSize: "24px" }} href="#">SMART RESUME</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link style={{ fontSize: "24px" }} href="#home">logout</Nav.Link>
-          </Nav>
         </Container>
       </Navbar>
       <Container className="col-11 center" >
