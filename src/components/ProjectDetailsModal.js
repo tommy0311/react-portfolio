@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import AwesomeSlider from "react-awesome-slider";
 import AwesomeSliderStyles from "../scss/light-slider.scss";
 import AwesomeSliderStyles2 from "../scss/dark-slider.scss";
+import parse from 'html-react-parser';
 import "react-awesome-slider/dist/custom-animations/scale-out-animation.css";
 
 function ProjectDetailsModal(props) {
@@ -100,7 +101,11 @@ function ProjectDetailsModal(props) {
               </a>
             ) : null}
           </h3>
-          <p className="modal-description">{description}</p>
+          {parse(`
+            <p className="modal-description">${description}</p>
+          `)
+          }
+
           <div className="col-md-12 text-center">
             <ul className="list-inline mx-auto">{tech}</ul>
           </div>
