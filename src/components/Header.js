@@ -50,68 +50,17 @@ function Header() {
   }, (prevProps, nextProps) => true);
 
   return (
-    <header id="home" style={{ height: '80vh', display: 'block' }}>
-      <div style={{
-        position: "absolute",
-        top: "2vh",
-        right: "2vh"
-
-      }}>
-        <Switch
-          checked={checked}
-          onChange={onThemeSwitchChange}
-          offColor="#baaa80"
-          onColor="#353535"
-          className="react-switch mx-auto"
-          width={90}
-          height={40}
-          uncheckedIcon={
-            <span
-              className="iconify"
-              data-icon="twemoji:owl"
-              data-inline="false"
-              style={{
-                display: "block",
-                height: "100%",
-                fontSize: 25,
-                textAlign: "end",
-                marginLeft: "20px",
-                color: "#353239",
-              }}
-            ></span>
-          }
-          checkedIcon={
-            <span
-              className="iconify"
-              data-icon="noto-v1:sun-with-face"
-              data-inline="false"
-              style={{
-                display: "block",
-                height: "100%",
-                fontSize: 25,
-                textAlign: "end",
-                marginLeft: "10px",
-                color: "#353239",
-              }}
-            ></span>
-          }
-          id="icon-switch"
-        />
-      </div>
-      <div className="row aligner" style={{ height: '100%' }}>
-        <div className="col-12">
-          <div>
-            <span className="iconify header-icon" data-icon="la:laptop-code" data-inline="false"></span>
-            <br />
-            <h1 className="mb-0">
-              <Typical steps={[name]} wrapper="p" />
-            </h1>
-            <div className="title-container">
-              <HeaderTitleTypeAnimation />
-            </div>
-            {networks}
-          </div>
+    <header id="home" style={{ height: '100vh', display: 'block' }}>
+      <div className="col-12">
+        <span className="iconify header-icon" data-icon="la:laptop-code" data-inline="false"></span>
+        <br />
+        <h1 className="mb-0">
+          <Typical steps={[name]} wrapper="p" />
+        </h1>
+        <div className="title-container">
+          <HeaderTitleTypeAnimation />
         </div>
+        {networks}
       </div>
     </header>
   );

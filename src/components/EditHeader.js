@@ -20,7 +20,7 @@ function EditHeader() {
 
   let networks = basicInfo?.social.map(function (network) {
     return (
-      <span key={network.name} className="m-4" >
+      <span key={network.name} className="mx-4" >
         <a href={network.url} target="_blank" rel="noopener noreferrer">
           <i className={network.class} style={{ fontSize: "400%", color: "black" }}></i>
         </a>
@@ -59,57 +59,10 @@ function EditHeader() {
   }
 
   return (
-    <header id="home" style={{ height: '80vh', display: 'block' }}>
-      <div style={{
-        position: "absolute",
-        top: "2vh",
-        right: "2vh"
+    <header id="home" style={{ minHeight: "100vh", display: 'block' }}>
 
-      }}>
-        <Switch
-          checked={checked}
-          onChange={onThemeSwitchChange}
-          offColor="#baaa80"
-          onColor="#353535"
-          className="react-switch mx-auto"
-          width={90}
-          height={40}
-          uncheckedIcon={
-            <span
-              className="iconify"
-              data-icon="twemoji:owl"
-              data-inline="false"
-              style={{
-                display: "block",
-                height: "100%",
-                fontSize: 25,
-                textAlign: "end",
-                marginLeft: "20px",
-                color: "#353239",
-              }}
-            ></span>
-          }
-          checkedIcon={
-            <span
-              className="iconify"
-              data-icon="noto-v1:sun-with-face"
-              data-inline="false"
-              style={{
-                display: "block",
-                height: "100%",
-                fontSize: 25,
-                textAlign: "end",
-                marginLeft: "10px",
-                color: "#353239",
-              }}
-            ></span>
-          }
-          id="icon-switch"
-        />
-      </div>
-      <div className="row aligner" style={{ height: '100%' }}>
-        <div className="col-md-12">
-          <div>
+      <div className="col-12">
+
             <span className="iconify header-icon" data-icon="la:laptop-code" data-inline="false"></span>
             <br />
             <h1 className="mb-0">
@@ -142,8 +95,8 @@ function EditHeader() {
             </div>
             {networks}
           </div>
-        </div>
-      </div>
+
+
     </header>
   );
 }
