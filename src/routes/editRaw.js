@@ -50,7 +50,7 @@ function EditRaw() {
       success: function (data, status, jqXHR) {
         dispatch(showModal(
           {
-            name: "updateReumseOkModal",
+            name: "updateReumseModal",
             title: "Message",
             message: "Successfully Saved !",
             btn1Label: "Ok",
@@ -58,6 +58,14 @@ function EditRaw() {
         ))
       },
       error: function (jqXHR, status, error) {
+        dispatch(showModal(
+          {
+            name: "updateReumseModal",
+            title: "Message",
+            message: error,
+            btn1Label: "Ok",
+          }
+        ))
       }
     });
   }

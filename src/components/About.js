@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import javascriptIcon from "@iconify/icons-logos/javascript";
 import html5Icon from "@iconify/icons-logos/html-5";
 import reactIcon from "@iconify/icons-logos/react";
+import TextareaAutosize from 'react-textarea-autosize';
 
 import { useSelector } from "react-redux";
 
@@ -92,15 +93,15 @@ function About() {
                   <span className="wave">{descriptionHeader}</span>
                   <br />
                   <br />
-                  <textarea
+                  <TextareaAutosize
                     style={{
                       width: "100%",
                       textAlign: "left",
                       backgroundColor: "transparent",
-                      borderColor: "black",
+                      borderColor: "transparent",
                       fontSize: "16px"
                     }}
-                    rows="8"
+                    minRows="12"
                     readOnly="readonly"
                     defaultValue={description}
                   />

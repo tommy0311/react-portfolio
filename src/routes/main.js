@@ -63,9 +63,9 @@ function Main() {
     cards = resumes.map((resume, index) => {
       return (
         <div
-          className="col-auto mb-5 mx-auto "
+          className="mb-5 px-3"
           key={index}
-          style={{ cursor: "pointer", backgroundColor: "whitesmoke", minWidth: "30%" }}
+          style={{ cursor: "pointer", backgroundColor: "whitesmoke", minWidth: "25vw", borderStyle: "solid" }}
         >
           <span className="portfolio-item d-block">
             <div>
@@ -73,7 +73,7 @@ function Main() {
                 {resume.name}
               </p>
             </div>
-            <Container className="d-flex flex-column center">
+            <Container className="d-flex flex-column align-items-center">
               <Link
                 className="col-10 my-3"
                 style={{ fontSize: "24px", color: "black", borderStyle: "solid", padding: "10px" }}
@@ -110,9 +110,11 @@ function Main() {
         </Container>
       </Navbar>
       <h1 className="col-12 center mb-5">{userPayload.account}`s resumes</h1>
-      <div className="d-flex flex-wrap">
+
+      <Container className="d-flex flex-wrap justify-content-between">
         {cards}
-      </div> 
+      </Container> 
+
     </div>
   );
 

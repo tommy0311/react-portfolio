@@ -6,6 +6,7 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import Badge from "react-bootstrap/Badge";
+import TextareaAutosize from 'react-textarea-autosize';
 
 function Experience() {
   let sectionName = "";
@@ -56,7 +57,7 @@ function Experience() {
           >
             {work.company}
           </h3>
-          <textarea
+          <TextareaAutosize
             className="mt-4 p-3"
             style={{
               width: "100%",
@@ -65,7 +66,6 @@ function Experience() {
               borderColor: "black",
               fontSize: "20px",
             }}
-            rows="8"
             readOnly="readonly"
             defaultValue={work.description}
           />

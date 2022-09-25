@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import javascriptIcon from "@iconify/icons-logos/javascript";
 import html5Icon from "@iconify/icons-logos/html-5";
 import reactIcon from "@iconify/icons-logos/react";
+import TextareaAutosize from 'react-textarea-autosize';
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -105,9 +106,13 @@ function EditAbout() {
                   />
                   <br />
                   <br />
-                  <textarea
-                    style={{ width: "100%", textAlign: "left", backgroundColor: "transparent", borderColor: "black" }}
-                    rows="8"
+                  <TextareaAutosize
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      backgroundColor: "transparent",
+                      borderColor: "black"
+                    }}
                     defaultValue={description}
                     onChange={event => handleInputChange("description", event)}
                   />

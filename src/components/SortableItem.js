@@ -8,6 +8,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import { showModal } from "../store/slice/modal";
 import { updateResume } from "../store/slice/resume";
+import TextareaAutosize from 'react-textarea-autosize';
 
 const ForwardItem = forwardRef(({ id, ...props }, ref) => {
   return <div {...props} ref={ref}></div>;
@@ -119,7 +120,7 @@ function SortableItem(props) {
           </h3>
 
           <div >
-            <textarea
+            <TextareaAutosize
               className="mt-4 p-3"
               style={{
                 width: "100%",
@@ -128,9 +129,9 @@ function SortableItem(props) {
                 borderColor: "black",
                 fontSize: "20px",
               }}
-              rows="8"
               defaultValue={experience.description}
               onChange={event => handleInputChange(props.index, "description", event)}
+              minRows="3"
             />
           </div>
           <div style={{ textAlign: "left", marginTop: "15px" }}>{techs}</div>
