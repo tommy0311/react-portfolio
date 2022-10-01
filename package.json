@@ -2,6 +2,7 @@
   "name": "react-portfolio",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tommy0311.github.io/react-portfolio",
   "dependencies": {
     "@dnd-kit/core": "^6.0.5",
     "@dnd-kit/sortable": "^7.0.1",
@@ -52,7 +53,7 @@
   "devDependencies": {
     "@iconify/icons-logos": "^1.2.15",
     "@iconify/react": "^1.1.4",
-    "gh-pages": "^3.1.0",
+    "gh-pages": "^3.2.3",
     "sass": "^1.42.1"
   }
 }
