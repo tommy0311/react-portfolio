@@ -1,0 +1,66 @@
+{
+    "basic_info": {
+      "name": "Davina Griss",
+      "titles": [ "Front-end Developer", "Senior Data Engineer", "Dev Team lead", "Mobile App Developer" ],
+      "social": [
+        {
+          "name": "github",
+          "url": "https://github.com",
+          "class": "fab fa-github"
+        },
+        {
+          "name": "instagram",
+          "url": "https://www.instagram.com",
+          "class": "fab fa-instagram"
+        }
+      ],
+      "image": "myProfile.jpg"
+    },
+    "skills": [
+      {
+        "name": "HTML 5",
+        "class": "devicon-html5-plain",
+        "select": false
+      },
+      {
+        "name": "CSS 3",
+        "class": "devicon-css3-plain",
+        "select": false
+      },
+      {
+        "name": "Angular",
+        "class": "devicon-angularjs-plain",
+        "select": false
+      },
+      {
+        "name": "TypeScript",
+        "class": "devicon-typescript-plain",
+        "select": false
+      },
+      {
+        "name": "JavaScript",
+        "class": "devicon-javascript-plain",
+        "select": false
+      },
+      {
+        "name": "Sass",
+        "class": "devicon-sass-original",
+        "select": false
+      },
+      {
+        "name": "Bootstrap",
+        "class": "devicon-bootstrap-plain",
+        "select": false
+      },
+      {
+        "name": "C#",
+        "class": "devicon-csharp-plain",
+        "select": false
+      },
+      {
+        "name": "MySql",
+        "class": "devicon-mysql-plain",
+        "select": false
+      }
+    ]
+  }
