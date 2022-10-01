@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import $ from "jquery";
 
+import { REACT_APP_APISERVER_BASE_URL } from "../config/config"
 import { userLogout } from "../store/slice/user";
 import "../App.scss";
 
@@ -33,7 +34,7 @@ function Main() {
 
   const fetchResumes = () => {
     $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes`,
+      url: `${REACT_APP_APISERVER_BASE_URL}/api/resumes`,
       type: "get",
       headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
       dataType: "json",

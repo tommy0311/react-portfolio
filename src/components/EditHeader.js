@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Switch from "react-switch";
+import React from "react";
+//import Switch from "react-switch";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -9,7 +9,7 @@ function EditHeader() {
   let name = "";
   let titles = [];
 
-  const [checked, setChecked] = useState(false);
+  //const [checked, setChecked] = useState(false);
 
   const dispatch = useDispatch();
   const resume = useSelector(state => {
@@ -28,6 +28,7 @@ function EditHeader() {
     );
   });
 
+  /*
   function onThemeSwitchChange(checked) {
     setChecked(checked);
     setTheme();
@@ -40,6 +41,7 @@ function EditHeader() {
       body.getAttribute(dataThemeAttribute) === "dark" ? "light" : "dark";
     body.setAttribute(dataThemeAttribute, newTheme);
   }
+  */
 
   const handleInputChange = (keyName, event) => {
     const newResumePayload = JSON.parse(JSON.stringify(resumePayload));

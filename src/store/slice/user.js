@@ -1,11 +1,13 @@
 import $ from "jquery";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import { REACT_APP_APISERVER_BASE_URL } from "../../config/config"
+
 export const fetchCurrentUser = createAsyncThunk(
   'user/fetchCurrentUser',
   async () => {
     return await $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/getCurrentUser`,
+      url: `${REACT_APP_APISERVER_BASE_URL}/api/getCurrentUser`,
       type: 'get',
       dataType: 'json',
       headers: { "Authorization": "Bearer " + localStorage.getItem("token") },

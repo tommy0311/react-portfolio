@@ -1,11 +1,13 @@
 import $ from "jquery";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import { REACT_APP_APISERVER_BASE_URL } from "../../config/config"
+
 export const fetchResumeById = createAsyncThunk(
   'resume/fetchResumeById',
   async (resumeId) => {
     return await $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
+      url: `${REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
       dataType: "json",
       cache: false,
       success: function (response) {
@@ -22,7 +24,7 @@ export const fetchTechnologies = createAsyncThunk(
   'resume/fetchTechnologies',
   async () => {
     return await $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/technologies`,
+      url: `${REACT_APP_APISERVER_BASE_URL}/api/resumes/technologies`,
       dataType: "json",
       cache: false,
       success: function (response) {

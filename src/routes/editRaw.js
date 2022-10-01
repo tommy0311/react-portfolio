@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import $ from "jquery";
 
+import { REACT_APP_APISERVER_BASE_URL } from "../config/config"
 import { fetchResumeById } from "../store/slice/resume";
 import DialogModal from "../components/DialogModal"
 import { showModal } from "../store/slice/modal";
@@ -40,7 +41,7 @@ function EditRaw() {
 
   const putResumeBody = () => {
     $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
+      url: `${REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
       type: 'put',
       dataType: 'json',
       headers: { "Authorization": "Bearer " + localStorage.getItem("token") },

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Container from 'react-bootstrap/Container';
 import $ from "jquery";
 
+import { REACT_APP_APISERVER_BASE_URL } from "../config/config"
 import "../App.scss";
 import EditHeader from "../components/EditHeader";
 import Footer from "../components/Footer";
@@ -77,7 +78,7 @@ function Edit() {
 
   const putResumeBody = () => {
     $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
+      url: `${REACT_APP_APISERVER_BASE_URL}/api/resumes/${resumeId}`,
       type: 'put',
       dataType: 'json',
       headers: { "Authorization": "Bearer " + localStorage.getItem("token") },

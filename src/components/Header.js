@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Typical from "react-typical";
-import Switch from "react-switch";
+//import Switch from "react-switch";
 
 import { useSelector } from "react-redux";
 
@@ -8,18 +8,27 @@ function Header() {
   let name = "";
   let titles = [];
 
-  const [checked, setChecked] = useState(false);
+  //const [checked, setChecked] = useState(false);
 
   const resume = useSelector(state => {
     return state.resume
   });
 
   const basicInfo = resume.payload?.body.basicInfo
-
+/*
   function onThemeSwitchChange(checked) {
     setChecked(checked);
     setTheme();
   }
+
+  function setTheme() {
+    const dataThemeAttribute = "data-theme";
+    const body = document.body;
+    const newTheme =
+      body.getAttribute(dataThemeAttribute) === "dark" ? "light" : "dark";
+    body.setAttribute(dataThemeAttribute, newTheme);
+  }
+*/
 
   let networks = basicInfo?.social.map(function (network) {
     return (
@@ -30,14 +39,6 @@ function Header() {
       </span>
     );
   });
-
-  function setTheme() {
-    const dataThemeAttribute = "data-theme";
-    const body = document.body;
-    const newTheme =
-      body.getAttribute(dataThemeAttribute) === "dark" ? "light" : "dark";
-    body.setAttribute(dataThemeAttribute, newTheme);
-  }
 
   if (basicInfo) {
     name = basicInfo.name;

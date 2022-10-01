@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
 
+import { REACT_APP_APISERVER_BASE_URL } from "../config/config"
 import DialogModal from "../components/DialogModal"
 import { showModal } from "../store/slice/modal";
 
@@ -18,7 +19,7 @@ export default function Login() {
 
   const postLogin = (account, password) => {
     $.ajax({
-      url: `${process.env.REACT_APP_APISERVER_BASE_URL}/api/login`,
+      url: `${REACT_APP_APISERVER_BASE_URL}/api/login`,
       dataType: 'json',
       type: 'post',
       contentType: 'application/json',
