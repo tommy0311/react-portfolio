@@ -30,7 +30,7 @@ function EditAbout() {
   }
 
   if (basicInfo) {
-    profilepic = "/images/" + basicInfo.image;
+    profilepic = basicInfo.image;
     sectionName = basicInfo.sectionName.about;
     descriptionHeader = basicInfo.descriptionHeader;
     description = basicInfo.description;
