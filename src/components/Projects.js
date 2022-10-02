@@ -63,7 +63,7 @@ function Projects() {
           <span>{sectionName}</span>
         </h1>
         <div className="col-md-12 mx-auto">
-          <div className="row mx-auto">{projects}</div>
+          <div className="row mx-auto center">{projects}</div>
         </div>
         <ProjectDetailsModal
           show={detailsModalShow}
